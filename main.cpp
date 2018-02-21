@@ -7,5 +7,6 @@ int main(int argc, char *argv[])
     Logowanie w;
     w.show();
     int x = 5;
+    x += 5;
     return a.exec();
 }
