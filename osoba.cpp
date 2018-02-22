@@ -4,7 +4,8 @@
 
 Osoba::Osoba()
 {
-
+    this->imie = "";
+    this->nazwisko = "";
 }
 
 Osoba::Osoba(string imie, string nazwisko)

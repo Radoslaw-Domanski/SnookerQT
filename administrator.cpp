@@ -2,7 +2,8 @@
 
 Administrator::Administrator() : Osoba()
 {
-
+    this->login = "";
+    this->haslo = "";
 }
 
 Administrator::Administrator(string login,string haslo): Osoba() {

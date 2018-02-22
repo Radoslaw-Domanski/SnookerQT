@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "administrator.h"
 #include "vector"
+#include "kontener.h"
 
 using namespace std;
 
@@ -18,14 +19,15 @@ class Logowanie : public QMainWindow
 public:
     explicit Logowanie(QWidget *parent = 0);
     //vector<Administator> getAdministratorzy();
-    void pobierzAdministratorow();
+    //void pobierzAdministratorow();
     ~Logowanie();
 
 private slots:
     void on_pushButton_clicked();
 
 private:
-    vector<Administrator> administratorzy;
+    //vector<Administrator> administratorzy;
+    Kontener dane;
     Ui::Logowanie *ui;
 };
 

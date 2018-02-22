@@ -15,16 +15,21 @@ TEMPLATE = app
 SOURCES += main.cpp\
         logowanie.cpp \
     administrator.cpp \
-    osoba.cpp
+    osoba.cpp \
+    zalogowany.cpp \
+    kontener.cpp
 
 HEADERS  += logowanie.h \
     administrator.h \
     osoba.h \
     ../../Downloads/rapidxml/rapidxml_iterators.hpp \
     ../../Downloads/rapidxml/rapidxml_print.hpp \
-    ../../Downloads/rapidxml/rapidxml_utils.hpp
+    ../../Downloads/rapidxml/rapidxml_utils.hpp \
+    zalogowany.h \
+    kontener.h
 
-FORMS    += logowanie.ui
+FORMS    += logowanie.ui \
+    zalogowany.ui
 
 DISTFILES += \
     administratorzy.xml \
