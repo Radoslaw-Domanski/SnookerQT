@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mecze>
+  <mecz nr="1">
+    <zawodnik1>1</zawodnik1>
+    <zawodnik2>2</zawodnik2>
+    <liczbaPartii>5</liczbaPartii>
+    <wynik1>3</wynik1>
+    <wynik2>0</wynik2>
+    <dataMeczu>20-02-2018</dataMeczu>
+    <partie>
+      <partia nr="1">
+        <punktyZawodnika1>69</punktyZawodnika1>
+        <punktyZawodnika2>25</punktyZawodnika2>
+        <aktualnyBrejk>69</aktualnyBrejk>
+        <dostepnePunkty>18</dostepnePunkty>
+        <dostepneBileCzerwone>0</dostepneBileCzerwone>
+        <aktualnyGracz>1</aktualnyGracz>
+      </partia>
+      <partia nr="2">
+        <punktyZawodnika1>115</punktyZawodnika1>
+        <punktyZawodnika2>25</punktyZawodnika2>
+        <aktualnyBrejk>115</aktualnyBrejk>
+        <dostepnePunkty>0</dostepnePunkty>
+        <dostepneBileCzerwone>0</dostepneBileCzerwone>
+        <aktualnyGracz>1</aktualnyGracz>
+      </partia>
+      <partia nr="3">
+        <punktyZawodnika1>98</punktyZawodnika1>
+        <punktyZawodnika2>25</punktyZawodnika2>
+        <aktualnyBrejk>67</aktualnyBrejk>
+        <dostepnePunkty>35</dostepnePunkty>
+        <dostepneBileCzerwone>1</dostepneBileCzerwone>
+        <aktualnyGracz>1</aktualnyGracz>
+      </partia>
+    </partie>
+  </mecz>
+</mecze>

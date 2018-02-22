@@ -13,8 +13,21 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        logowanie.cpp
+        logowanie.cpp \
+    administrator.cpp \
+    osoba.cpp
 
-HEADERS  += logowanie.h
+HEADERS  += logowanie.h \
+    administrator.h \
+    osoba.h \
+    ../../Downloads/rapidxml/rapidxml_iterators.hpp \
+    ../../Downloads/rapidxml/rapidxml_print.hpp \
+    ../../Downloads/rapidxml/rapidxml_utils.hpp
 
 FORMS    += logowanie.ui
+
+DISTFILES += \
+    administratorzy.xml \
+    mecze1.xml \
+    turnieje.xml \
+    zawodnicy.xml

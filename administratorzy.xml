@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<administratorzy>
+  <administrator>
+    <login>admin</login>
+    <haslo>admin</haslo>
+    <imie>Pan</imie>
+    <nazwisko>Administrator</nazwisko>
+  </administrator>
+</administratorzy>
