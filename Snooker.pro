@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     administrator.cpp \
     osoba.cpp \
     zalogowany.cpp \
-    kontener.cpp
+    kontener.cpp \
+    dodanieadminapowodzenie.cpp
 
 HEADERS  += logowanie.h \
     administrator.h \
@@ -26,10 +27,12 @@ HEADERS  += logowanie.h \
     ../../Downloads/rapidxml/rapidxml_print.hpp \
     ../../Downloads/rapidxml/rapidxml_utils.hpp \
     zalogowany.h \
-    kontener.h
+    kontener.h \
+    dodanieadminapowodzenie.h
 
 FORMS    += logowanie.ui \
-    zalogowany.ui
+    zalogowany.ui \
+    dodanieadminapowodzenie.ui
 
 DISTFILES += \
     administratorzy.xml \

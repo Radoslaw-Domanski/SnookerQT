@@ -14,16 +14,20 @@ class Zalogowany : public QMainWindow
 
 public:
     explicit Zalogowany(QWidget *parent = 0);
+    void dodajAdministratorowDoListy();
+    void setAdministratorIndex(int index);
+    int getAdministratorIndex();
     ~Zalogowany();
 
 private slots:
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
+    void on_listWidget_currentRowChanged(int currentRow);
+    void on_dodajAdministratora_clicked();
+    void on_edycjaAdministratora_clicked();
 
 private:
     Ui::Zalogowany *ui;
     Kontener dane;
+    int administratorIndex;
 };
 
 #endif // ZALOGOWANY_H

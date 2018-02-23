@@ -37,7 +37,10 @@ bool Kontener::logujAdministratora(string login, string haslo){
 }
 
 bool Kontener::dodajAdministratora(Administrator adm){
-    if(!sprawdzLoginAdministratora(adm.getLogin())){
+    if(!walidujAdministratora(adm)){
+        return false;
+    }
+    else if(!sprawdzLoginAdministratora(adm.getLogin())){
         this->administratorzy.push_back(adm);
         return true;
     }
@@ -53,4 +56,84 @@ bool Kontener::sprawdzLoginAdministratora(string login){
         }
     }
     return znaleziony;
+}
+
+vector<Administrator> Kontener::getAdministratorzy(){
+    return this->administratorzy;
+}
+
+bool Kontener::walidujAdministratora(Administrator adm){
+    if(adm.getLogin().length() < 5 ||
+       adm.getHaslo().length() < 5 ||
+       adm.getImie().length() < 3 ||
+       adm.getNazwisko().length() < 3){
+        return false;
+    }
+    return true;
+}
+
+Administrator Kontener::getAdministrator(int index){
+    return this->administratorzy[index];
+}
+
+
+bool Kontener::edytujAdministratora(int index, Administrator adm){
+    if(walidujAdministratora(adm)){
+        this->administratorzy[index].setHaslo(adm.getHaslo());
+        this->administratorzy[index].setImie(adm.getImie());
+        this->administratorzy[index].setNazwisko(adm.getNazwisko());
+        return true;
+    }
+    else
+        return false;
+}
+
+void Kontener::zapiszAdministratorow(){
+    xml_document<> doc;
+    xml_node<>* decl = doc.allocate_node(node_declaration);
+    decl->append_attribute(doc.allocate_attribute("version", "1.0"));
+    decl->append_attribute(doc.allocate_attribute("encoding", "UTF-8"));
+    doc.append_node(decl);
+
+    xml_node<> *files = doc.allocate_node(node_element, "administratorzy");
+    doc.append_node(files);
+
+    for(int i = this->administratorzy.size()-1;i>=0;i--){
+        xml_node<> *admin = doc.allocate_node(node_element, "administrator");
+        files->append_node(admin);
+        Administrator adm = this->getAdministrator(i);
+
+        string log = adm.getLogin();
+        char * logPtr = new char[log.size() + 1];
+        copy(log.begin(), log.end(), logPtr);
+        logPtr[log.size()] = '\0';
+        xml_node<> *login = doc.allocate_node(node_element, "login", logPtr);
+        admin->append_node(login);
+
+        string pwd = adm.getHaslo();
+        char * pwdPtr = new char[pwd.size() + 1];
+        copy(pwd.begin(), pwd.end(), pwdPtr);
+        pwdPtr[pwd.size()] = '\0';
+        xml_node<> *haslo = doc.allocate_node(node_element, "haslo",pwdPtr);
+        admin->append_node(haslo);
+
+        string name = adm.getImie();
+        char * namePtr = new char[name.size() + 1];
+        copy(name.begin(), name.end(), namePtr);
+        namePtr[name.size()] = '\0';
+        xml_node<> *imie = doc.allocate_node(node_element, "imie",namePtr);
+        admin->append_node(imie);
+
+        string sur = adm.getNazwisko();
+        char * surPtr = new char[sur.size() + 1];
+        copy(sur.begin(), sur.end(), surPtr);
+        surPtr[sur.size()] = '\0';
+        xml_node<> *nazwisko = doc.allocate_node(node_element, "nazwisko",surPtr);
+        admin->append_node(nazwisko);
+    }
+
+    std::ofstream myfile("administratorzy.xml");
+    myfile << doc;
+    myfile.close();
+    doc.clear();
 }
