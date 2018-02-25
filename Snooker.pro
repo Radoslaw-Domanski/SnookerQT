@@ -18,7 +18,10 @@ SOURCES += main.cpp\
     osoba.cpp \
     zalogowany.cpp \
     kontener.cpp \
-    dodanieadminapowodzenie.cpp
+    dodanieadminapowodzenie.cpp \
+    partia.cpp \
+    zawodnik.cpp \
+    mecz.cpp
 
 HEADERS  += logowanie.h \
     administrator.h \
@@ -28,7 +31,10 @@ HEADERS  += logowanie.h \
     ../../Downloads/rapidxml/rapidxml_utils.hpp \
     zalogowany.h \
     kontener.h \
-    dodanieadminapowodzenie.h
+    dodanieadminapowodzenie.h \
+    partia.h \
+    zawodnik.h \
+    mecz.h
 
 FORMS    += logowanie.ui \
     zalogowany.ui \
