@@ -8,14 +8,16 @@ Zalogowany::Zalogowany(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->frame->setVisible(false);
-    this->dane = Kontener();
+    this->kontenerAdministratorzy = KontenerAdministrator();
     dodajAdministratorowDoListy();
+    this->kontenerZawodnicy = KontenerZawodnik();
+
     //ui->administratorzyListView->setModel(QStringListModel);
 }
 
 Zalogowany::~Zalogowany()
 {
-    this->dane.zapiszAdministratorow();
+    this->kontenerAdministratorzy.zapiszAdministratorow();
     delete ui;
 }
 
@@ -28,7 +30,7 @@ int Zalogowany::getAdministratorIndex(){
 }
 
 void Zalogowany::dodajAdministratorowDoListy(){
-    vector<Administrator> admini = this->dane.getAdministratorzy();
+    vector<Administrator> admini = this->kontenerAdministratorzy.getAdministratorzy();
     for(int i=0;i<admini.size();i++){
         QString qstr = QString::fromStdString(admini[i].getLogin() + " " + admini[i].getHaslo());
         this->ui->listWidget->addItem(qstr);
@@ -38,7 +40,7 @@ void Zalogowany::dodajAdministratorowDoListy(){
 void Zalogowany::on_listWidget_currentRowChanged(int currentRow)
 {
     ui->loginText->setEnabled(false);
-    Administrator admin = this->dane.getAdministrator(currentRow);
+    Administrator admin = this->kontenerAdministratorzy.getAdministrator(currentRow);
     ui->loginText->setText(QString::fromStdString(admin.getLogin()));
     ui->hasloText->setText(QString::fromStdString(admin.getHaslo()));
     ui->imieText->setText(QString::fromStdString(admin.getImie()));
@@ -68,7 +70,7 @@ void Zalogowany::on_edycjaAdministratora_clicked()
     string nazwisko = ui->nazwiskoText->text().toStdString();
     Administrator adm = Administrator(imie,nazwisko,login,haslo);
     if(ui->edycjaAdministratora->text() == "Dodaj"){
-        if(this->dane.dodajAdministratora(adm)){
+        if(this->kontenerAdministratorzy.dodajAdministratora(adm)){
             DodanieAdminaPowodzenie *powodzenie = new DodanieAdminaPowodzenie(this);
             powodzenie->show();
             this->ui->listWidget->addItem(QString::fromStdString(imie + " " + nazwisko));
@@ -79,7 +81,7 @@ void Zalogowany::on_edycjaAdministratora_clicked()
         }
     }
     else{
-        if(this->dane.edytujAdministratora(this->getAdministratorIndex(),adm)){
+        if(this->kontenerAdministratorzy.edytujAdministratora(this->getAdministratorIndex(),adm)){
             DodanieAdminaPowodzenie *powodzenie = new DodanieAdminaPowodzenie(this);
             powodzenie->show();
             this->ui->listWidget->item(this->getAdministratorIndex())->setText(QString::fromStdString(adm.getImie() + " " + adm.getNazwisko()));

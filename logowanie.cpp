@@ -15,7 +15,7 @@ Logowanie::Logowanie(QWidget *parent) :
     ui(new Ui::Logowanie)
 {
     ui->setupUi(this);
-    this->dane = Kontener();
+    this->dane = KontenerAdministrator();
 }
 
 Logowanie::~Logowanie()

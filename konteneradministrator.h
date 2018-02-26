@@ -1,5 +1,5 @@
-#ifndef KONTENER_H
-#define KONTENER_H
+#ifndef KONTENERADMINISTRATOR_H
+#define KONTENERADMINISTRATOR_H
 #include "vector"
 #include "administrator.h"
 #include "rapidxml/rapidxml.hpp"
@@ -10,12 +10,12 @@
 
 using namespace rapidxml;
 
-class Kontener
+class KontenerAdministrator
 {
 private:
     vector<Administrator> administratorzy;
 public:
-    Kontener();
+    KontenerAdministrator();
     void pobierzAdministratorow();
     bool logujAdministratora(string login, string haslo);
     bool dodajAdministratora(Administrator adm);
@@ -25,6 +25,7 @@ public:
     bool edytujAdministratora(int index, Administrator adm);
     void zapiszAdministratorow();
     Administrator getAdministrator(int index);
+    Administrator getAdministrator(string login);
 };
 
-#endif // KONTENER_H
+#endif // KONTENERADMINISTRATOR_H

@@ -12,6 +12,16 @@ Zawodnik::~Zawodnik(){
 
 }
 
+Zawodnik::Zawodnik(string imie, string nazwisko, string narodowosc, tm dataUrodzenia, int najwyzszyBrejk, int iloscBrejkowMaksymalnych,
+                   int iloscBrejkowStupunktowych, double lacznaWygrana): Osoba(imie,nazwisko){
+    this->narodowosc = narodowosc;
+    this->dataUrodzenia = dataUrodzenia;
+    this->najwyzszyBrejk = najwyzszyBrejk;
+    this->brejkiMaksymalne = iloscBrejkowMaksymalnych;
+    this->brejkiStupunktowe = iloscBrejkowStupunktowych;
+    this->zarobki = lacznaWygrana;
+}
+
 void Zawodnik::dodajZarobki(double suma){
     this->zarobki += suma;
 }
@@ -53,7 +63,7 @@ void Zawodnik::dodajBrejkStupunktowy(int wartosc){
         this->brejkiMaksymalne++;
     }
     if(wartosc > this->najwyzszyBrejk){
-        this->najwyzszyBrejk = wartosc;
+        this->setNajwyzszyBrejk(wartosc);
     }
     this->brejkiStupunktowe++;
 }
@@ -65,4 +75,9 @@ Zawodnik::Zawodnik(string imie, string nazwisko): Osoba(imie,nazwisko){
 Zawodnik::Zawodnik(string imie, string nazwisko,string narodowosc,tm dataUrodzenia) : Osoba(imie,nazwisko){
     this->narodowosc = narodowosc;
     this->dataUrodzenia = dataUrodzenia;
+}
+
+
+void Zawodnik::setNajwyzszyBrejk(int wartosc){
+    this->najwyzszyBrejk = wartosc;
 }

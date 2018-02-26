@@ -2,7 +2,8 @@
 #define ZALOGOWANY_H
 
 #include <QMainWindow>
-#include "kontener.h"
+#include "konteneradministrator.h"
+#include "kontenerzawodnik.h"
 
 namespace Ui {
 class Zalogowany;
@@ -26,7 +27,8 @@ private slots:
 
 private:
     Ui::Zalogowany *ui;
-    Kontener dane;
+    KontenerAdministrator kontenerAdministratorzy;
+    KontenerZawodnik kontenerZawodnicy;
     int administratorIndex;
 };
 

@@ -16,6 +16,8 @@ public:
     Zawodnik();
     Zawodnik(string imie, string nazwisko);
     Zawodnik(string imie, string nazwisko,string narodowosc,tm dataUrodzenia);
+    Zawodnik(string imie, string nazwisko, string narodowosc, tm dataUrodzenia, int najwyzszyBrejk, int iloscBrejkowMaksymalnych,
+             int iloscBrejkowStupunktowych, double lacznaWygrana);
     string getNarodowosc();
     void setNarodowosc(string narodowosc);
     tm getDataUrodzenia();
@@ -26,6 +28,7 @@ public:
     int getBrejkiStupunktowe();
     int getBrejkiMaksymalne();
     int getNajwyzszyBrejk();
+    void setNajwyzszyBrejk(int wartosc);
     ~Zawodnik();
 };
 

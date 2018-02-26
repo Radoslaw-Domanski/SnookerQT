@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "administrator.h"
 #include "vector"
-#include "kontener.h"
+#include "konteneradministrator.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ private slots:
 
 private:
     //vector<Administrator> administratorzy;
-    Kontener dane;
+    KontenerAdministrator dane;
     Ui::Logowanie *ui;
 };
 

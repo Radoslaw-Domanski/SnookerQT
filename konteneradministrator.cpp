@@ -1,12 +1,12 @@
-#include "kontener.h"
+#include "konteneradministrator.h"
 
-Kontener::Kontener()
+KontenerAdministrator::KontenerAdministrator()
 {
     this->administratorzy = vector<Administrator>();
     this->pobierzAdministratorow();
 }
 
-void Kontener::pobierzAdministratorow(){
+void KontenerAdministrator::pobierzAdministratorow(){
     xml_document<> doc;
     xml_node<> * root_node;
     ifstream plik("administratorzy.xml");
@@ -25,7 +25,7 @@ void Kontener::pobierzAdministratorow(){
     }
 }
 
-bool Kontener::logujAdministratora(string login, string haslo){
+bool KontenerAdministrator::logujAdministratora(string login, string haslo){
     bool znaleziony = false;
     for(int i = 0; i < this->administratorzy.size();i++){
         if(this->administratorzy[i].getLogin() == login &&
@@ -36,7 +36,7 @@ bool Kontener::logujAdministratora(string login, string haslo){
     return znaleziony;
 }
 
-bool Kontener::dodajAdministratora(Administrator adm){
+bool KontenerAdministrator::dodajAdministratora(Administrator adm){
     if(!walidujAdministratora(adm)){
         return false;
     }
@@ -48,7 +48,7 @@ bool Kontener::dodajAdministratora(Administrator adm){
         return false;
 }
 
-bool Kontener::sprawdzLoginAdministratora(string login){
+bool KontenerAdministrator::sprawdzLoginAdministratora(string login){
     bool znaleziony = false;
     for(int i = 0; i < this->administratorzy.size();i++){
         if(this->administratorzy[i].getLogin() == login){
@@ -58,11 +58,11 @@ bool Kontener::sprawdzLoginAdministratora(string login){
     return znaleziony;
 }
 
-vector<Administrator> Kontener::getAdministratorzy(){
+vector<Administrator> KontenerAdministrator::getAdministratorzy(){
     return this->administratorzy;
 }
 
-bool Kontener::walidujAdministratora(Administrator adm){
+bool KontenerAdministrator::walidujAdministratora(Administrator adm){
     if(adm.getLogin().length() < 5 ||
        adm.getHaslo().length() < 5 ||
        adm.getImie().length() < 3 ||
@@ -72,12 +72,21 @@ bool Kontener::walidujAdministratora(Administrator adm){
     return true;
 }
 
-Administrator Kontener::getAdministrator(int index){
+Administrator KontenerAdministrator::getAdministrator(int index){
     return this->administratorzy[index];
 }
 
+Administrator KontenerAdministrator::getAdministrator(string login){
+    Administrator adm = Administrator();
+    for(int i =0; i < this->administratorzy.size();i++){
+        if(this->administratorzy[i].getLogin() == login){
+            adm = this->administratorzy[i];
+        }
+    }
+    return adm;
+}
 
-bool Kontener::edytujAdministratora(int index, Administrator adm){
+bool KontenerAdministrator::edytujAdministratora(int index, Administrator adm){
     if(walidujAdministratora(adm)){
         this->administratorzy[index].setHaslo(adm.getHaslo());
         this->administratorzy[index].setImie(adm.getImie());
@@ -88,7 +97,7 @@ bool Kontener::edytujAdministratora(int index, Administrator adm){
         return false;
 }
 
-void Kontener::zapiszAdministratorow(){
+void KontenerAdministrator::zapiszAdministratorow(){
     xml_document<> doc;
     xml_node<>* decl = doc.allocate_node(node_declaration);
     decl->append_attribute(doc.allocate_attribute("version", "1.0"));
