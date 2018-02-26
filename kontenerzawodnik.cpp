@@ -12,6 +12,7 @@ KontenerZawodnik::~KontenerZawodnik(){
 
 bool KontenerZawodnik::dodajZawodnika(Zawodnik zawodnik){
     if(!this->sprawdzZawodnika(zawodnik) && this->walidujZawodnika(zawodnik)){
+        zawodnik.setId(this->ustalNajwiekszyId() + 1);
         this->zawodnicy.push_back(zawodnik);
         return true;
     }
@@ -28,26 +29,27 @@ void KontenerZawodnik::pobierzZawodnikow(){
     buffer.push_back('\0');
     doc.parse<0>(&buffer[0]);
     root_node = doc.first_node("zawodnicy");
-    xml_node<> * brewery_node = root_node->first_node("zawodnik");
-    for (brewery_node; brewery_node; brewery_node = brewery_node->next_sibling())
+    xml_node<> * zawodnik_node = root_node->first_node("zawodnik");
+    for (zawodnik_node; zawodnik_node; zawodnik_node = zawodnik_node->next_sibling())
     {
+        int id = atoi(zawodnik_node->first_attribute("id")->value());
         tm data = tm();
-        string imie = brewery_node->first_node("imie")->value();
-        string nazwisko = brewery_node->first_node("nazwisko")->value();
-        string narodowosc = brewery_node->first_node("narodowosc")->value();
-        string dataUrodzeniaStr = brewery_node->first_node("dataUrodzenia")->value();
+        string imie = zawodnik_node->first_node("imie")->value();
+        string nazwisko = zawodnik_node->first_node("nazwisko")->value();
+        string narodowosc = zawodnik_node->first_node("narodowosc")->value();
+        string dataUrodzeniaStr = zawodnik_node->first_node("dataUrodzenia")->value();
         int dzien = atoi(dataUrodzeniaStr.substr(0,2).c_str());
         int miesiac = atoi(dataUrodzeniaStr.substr(3,2).c_str());
         int rok = atoi(dataUrodzeniaStr.substr(6,4).c_str());
         data.tm_mday = dzien;
         data.tm_mon = miesiac - 1;
         data.tm_year = rok - 1900;
-        int najwyzszyBrejk = atoi(brewery_node->first_node("najwyzszyBrejk")->value());
-        int iloscBrejkowMaksymalnych = atoi(brewery_node->first_node("brejkiMaksymalne")->value());
-        int iloscBrejkowStupunktowych = atoi(brewery_node->first_node("brejkiStupunktowe")->value());
-        double lacznaWygrana = stod(brewery_node->first_node("zarobki")->value());
+        int najwyzszyBrejk = atoi(zawodnik_node->first_node("najwyzszyBrejk")->value());
+        int iloscBrejkowMaksymalnych = atoi(zawodnik_node->first_node("brejkiMaksymalne")->value());
+        int iloscBrejkowStupunktowych = atoi(zawodnik_node->first_node("brejkiStupunktowe")->value());
+        double lacznaWygrana = stod(zawodnik_node->first_node("zarobki")->value());
         this->zawodnicy.push_back(Zawodnik(imie,nazwisko,narodowosc,data,najwyzszyBrejk,iloscBrejkowMaksymalnych,
-                                           iloscBrejkowStupunktowych,lacznaWygrana));
+                                           iloscBrejkowStupunktowych,lacznaWygrana,id));
     }
 }
 
@@ -61,10 +63,17 @@ void KontenerZawodnik::zapiszZawodnikow(){
     xml_node<> *files = doc.allocate_node(node_element, "zawodnicy");
     doc.append_node(files);
 
-    for(int i = this->zawodnicy.size()-1;i>=0;i--){
+    for(int i = 0;i < this->zawodnicy.size();i++){
         xml_node<> *zawodnik = doc.allocate_node(node_element, "zawodnik");
         files->append_node(zawodnik);
         Zawodnik zaw = this->getZawodnik(i);
+
+        string id = to_string(zaw.getId());
+        char * idPtr = new char[id.size() + 1];
+        copy(id.begin(), id.end(), idPtr);
+        idPtr[id.size()] = '\0';
+        xml_attribute<> *attr = doc.allocate_attribute("id", idPtr);
+        zawodnik->append_attribute(attr);
 
         string name = zaw.getImie();
         char * namePtr = new char[name.size() + 1];
@@ -134,7 +143,7 @@ void KontenerZawodnik::zapiszZawodnikow(){
         zawodnik->append_node(dataUrodzenia);
     }
 
-    std::ofstream myfile("zawodnicyTest.xml");
+    std::ofstream myfile("zawodnicy.xml");
     myfile << doc;
     myfile.close();
     doc.clear();
@@ -167,6 +176,17 @@ bool KontenerZawodnik::sprawdzZawodnika(Zawodnik zawodnik){
         }
     }
     return jest;
+}
+
+int KontenerZawodnik::ustalNajwiekszyId()
+{
+    int id = 0;
+    for(int i = 0; i< this->zawodnicy.size(); i++){
+        if(this->zawodnicy[i].getId() > id){
+            id = zawodnicy[i].getId();
+        }
+    }
+    return id;
 }
 
 Zawodnik KontenerZawodnik::getZawodnik(int index){

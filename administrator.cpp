@@ -2,18 +2,18 @@
 
 Administrator::Administrator() : Osoba()
 {
-    this->login = "";
-    this->haslo = "";
+    this->setLogin("");
+    this->setHaslo("");
 }
 
 Administrator::Administrator(string login,string haslo): Osoba() {
-    this->login = login;
-    this->haslo = haslo;
+    this->setLogin(login);
+    this->setHaslo(haslo);
 }
 
 Administrator::Administrator(string imie, string nazwisko, string login, string haslo) : Osoba(imie,nazwisko) {
-    this->login = login;
-    this->haslo = haslo;
+    this->setLogin(login);
+    this->setHaslo(haslo);
 }
 
 Administrator::~Administrator() {

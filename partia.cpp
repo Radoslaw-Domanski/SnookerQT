@@ -1,14 +1,24 @@
 #include "partia.h"
 
 Partia::Partia()
-{
-    this->dostepnePunkty = 147;
-    this->aktualnyBrejk = 0;
-    this->aktualnyZawodnik = true;
-    this->dostepneBileCzerwone = 15;
-    this->punktyZawodnika1 = 0;
-    this->punktyZawodnika2 = 0;
-    this->zakonczona = false;
+{    
+    this->setPunktyZawodnika1(0);
+    this->setPunktyZawodnika2(0);
+    this->setAktualnyBrejk(0);
+    this->setDostepnePunkty(147);
+    this->setDostepneBileCzerwone(15);
+    this->setAktualnyZawodnik(true);
+    this->setZakonczona(false);
+}
+
+Partia:: Partia(int punkty1, int punkty2, int aktualnyBrejk, int dostepnePunkty, int dostepneBileCzerwone, bool aktualnyZawodnik, bool zakonczona){
+    this->setPunktyZawodnika1(punkty1);
+    this->setPunktyZawodnika2(punkty2);
+    this->setAktualnyBrejk(aktualnyBrejk);
+    this->setDostepnePunkty(dostepnePunkty);
+    this->setDostepneBileCzerwone(dostepneBileCzerwone);
+    this->setAktualnyZawodnik(aktualnyZawodnik);
+    this->setZakonczona(zakonczona);
 }
 
 Partia::~Partia(){
@@ -27,51 +37,105 @@ void Partia::zmienZawodnika(){
     this->aktualnyZawodnik = !this->aktualnyZawodnik;
 }
 
-void Partia::zerujBrejk(){
-    this->aktualnyBrejk = 0;
-}
-
 void Partia::faul(int punkty){
-    if(this->aktualnyZawodnik){
-        this->punktyZawodnika2 += punkty;
+    if(this->getAktualnyZawodnik()){
+        this->setPunktyZawodnika2(this->getPunktyZawodnika2() + punkty);
     }
     else{
-        this->punktyZawodnika1 += punkty;
+        this->setPunktyZawodnika1(this->getPunktyZawodnika1() + punkty);
     }
-    this->zerujBrejk();
+    this->setAktualnyBrejk(0);
     this->zmienZawodnika();
 }
 
 void Partia::wbijBileCzerwona(){
-    if(this->dostepneBileCzerwone > 0){
-        if(this->aktualnyZawodnik){
-            this->punktyZawodnika1 += 1;
+    if(this->getDostepneBileCzerwone() > 0){
+        if(this->getAktualnyZawodnik()){
+            this->setPunktyZawodnika1( this->getPunktyZawodnika1() + 1) ;
         }
         else{
-           this->punktyZawodnika2 += 1;
+           this->setPunktyZawodnika2( this->getPunktyZawodnika2() + 1) ;
         }
-        this->aktualnyBrejk += 1;
-        this->dostepneBileCzerwone--;
-        this->dostepnePunkty -= 8;
+        this->setAktualnyBrejk(this->getAktualnyBrejk() + 1);
+        this->setDostepneBileCzerwone(this->getDostepneBileCzerwone() - 1);
+        this->setDostepnePunkty(this->getDostepnePunkty() - 8);
     }
 }
 
 void Partia::wbijBileKolorowa(int punkty){
-    if(this->aktualnyZawodnik){
-        this->punktyZawodnika1 += punkty;
+    if(this->getAktualnyZawodnik()){
+        this->setPunktyZawodnika1(this->getPunktyZawodnika1() + punkty);
     }
     else{
-        this->punktyZawodnika2 += punkty;
+        this->setPunktyZawodnika2(this->getPunktyZawodnika2() + punkty);
     }
-    this->aktualnyBrejk += punkty;
-    if(this->dostepneBileCzerwone == 0 && this->dostepnePunkty <= 27){
-        this->dostepnePunkty -= punkty;
+    this->setAktualnyBrejk(this->getAktualnyBrejk() + punkty);
+    if(this->getDostepneBileCzerwone() == 0 && this->getDostepnePunkty() <= 27){
+        this->setDostepnePunkty(this->getDostepnePunkty() - punkty);
     }
-    if(this->dostepnePunkty == 0){
+    if(this->getDostepnePunkty() == 0){
         this->zakonczPartie();
     }
 }
 
 void Partia::zakonczPartie(){
-    this->zakonczona = true;
+    this->setZakonczona(true);
+}
+
+int Partia::getAktualnyBrejk(){
+    return this->aktualnyBrejk;
+}
+
+int Partia::getDostepnePunkty(){
+    return this->dostepnePunkty;
+}
+
+int Partia::getDostepneBileCzerwone(){
+    return this->dostepneBileCzerwone;
+}
+
+bool Partia::getAktualnyZawodnik(){
+    return this->aktualnyZawodnik;
+}
+
+bool Partia::getZakonczona(){
+    return this->zakonczona;
+}
+
+void Partia::setPunktyZawodnika1(int punkty){
+    this->punktyZawodnika1 = punkty;
+}
+
+void Partia::setPunktyZawodnika2(int punkty){
+    this->punktyZawodnika2 = punkty;
+}
+
+void Partia::setAktualnyBrejk(int punkty){
+    this->aktualnyBrejk = punkty;
+}
+
+void Partia::setDostepnePunkty(int punkty){
+    this->dostepnePunkty = punkty;
+}
+
+void Partia::setDostepneBileCzerwone(int bile){
+    this->dostepneBileCzerwone = bile;
+}
+
+void Partia::setAktualnyZawodnik(bool zawodnik){
+    this->aktualnyZawodnik = zawodnik;
+}
+
+void Partia::setZakonczona(bool zakonczona){
+    this->zakonczona = zakonczona;
+}
+
+void Partia::edytujPartie(Partia partia){
+    this->setPunktyZawodnika1(partia.getPunktyZawodnika1());
+    this->setPunktyZawodnika2(partia.getPunktyZawodnika2());
+    this->setAktualnyBrejk(partia.getAktualnyBrejk());
+    this->setDostepnePunkty(partia.getDostepnePunkty());
+    this->setDostepneBileCzerwone(partia.getDostepneBileCzerwone());
+    this->setAktualnyZawodnik(partia.getAktualnyZawodnik());
+    this->setZakonczona(partia.getZakonczona());
 }

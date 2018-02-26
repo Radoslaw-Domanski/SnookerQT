@@ -4,14 +4,14 @@
 
 Osoba::Osoba()
 {
-    this->imie = "";
-    this->nazwisko = "";
+    this->setImie("");
+    this->setNazwisko("");
 }
 
 Osoba::Osoba(string imie, string nazwisko)
 {
-    this->imie = imie;
-    this->nazwisko = nazwisko;
+    this->setImie(imie);
+    this->setNazwisko(nazwisko);
 }
 
 Osoba::~Osoba()

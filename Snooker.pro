@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     zawodnik.cpp \
     mecz.cpp \
     konteneradministrator.cpp \
-    kontenerzawodnik.cpp
+    kontenerzawodnik.cpp \
+    turniej.cpp \
+    kontenerturniej.cpp
 
 HEADERS  += logowanie.h \
     administrator.h \
@@ -36,7 +38,9 @@ HEADERS  += logowanie.h \
     zawodnik.h \
     mecz.h \
     konteneradministrator.h \
-    kontenerzawodnik.h
+    kontenerzawodnik.h \
+    turniej.h \
+    kontenerturniej.h
 
 FORMS    += logowanie.ui \
     zalogowany.ui \

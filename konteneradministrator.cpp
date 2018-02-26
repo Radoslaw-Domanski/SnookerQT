@@ -107,7 +107,7 @@ void KontenerAdministrator::zapiszAdministratorow(){
     xml_node<> *files = doc.allocate_node(node_element, "administratorzy");
     doc.append_node(files);
 
-    for(int i = this->administratorzy.size()-1;i>=0;i--){
+    for(int i = 0;i < this->administratorzy.size();i++){
         xml_node<> *admin = doc.allocate_node(node_element, "administrator");
         files->append_node(admin);
         Administrator adm = this->getAdministrator(i);
