@@ -22,25 +22,20 @@ SOURCES += main.cpp\
     zawodnik.cpp \
     mecz.cpp \
     konteneradministrator.cpp \
-    kontenerzawodnik.cpp \
     turniej.cpp \
-    kontenerturniej.cpp
+    kontenersnooker.cpp
 
 HEADERS  += logowanie.h \
     administrator.h \
     osoba.h \
-    ../../Downloads/rapidxml/rapidxml_iterators.hpp \
-    ../../Downloads/rapidxml/rapidxml_print.hpp \
-    ../../Downloads/rapidxml/rapidxml_utils.hpp \
     zalogowany.h \
     dodanieadminapowodzenie.h \
     partia.h \
     zawodnik.h \
     mecz.h \
     konteneradministrator.h \
-    kontenerzawodnik.h \
     turniej.h \
-    kontenerturniej.h
+    kontenersnooker.h
 
 FORMS    += logowanie.ui \
     zalogowany.ui \

@@ -114,13 +114,24 @@ void Turniej::dodajZawodnika(Zawodnik zawodnik)
     this->zawodnicy.push_back(zawodnik);
 }
 
+int Turniej::getId() const
+{
+    return id;
+}
+
+void Turniej::setId(int value)
+{
+    id = value;
+}
+
 Turniej::Turniej()
 {
+    this->setId(0);
     this->mecze = vector<Mecz>();
     this->zawodnicy = vector<Zawodnik>();
 }
 
-Turniej::Turniej(string nazwa, string sponsor, string miejsce, double pulaNagrod, int najwyzszyBrejkTurnieju, int liczbaZawodnikow)
+Turniej::Turniej(string nazwa, string sponsor, string miejsce, double pulaNagrod, int najwyzszyBrejkTurnieju, int liczbaZawodnikow, int id)
 {
     this->setNazwa(nazwa);
     this->setSponsor(sponsor);
@@ -130,6 +141,7 @@ Turniej::Turniej(string nazwa, string sponsor, string miejsce, double pulaNagrod
     this->setLiczbaZawodnikow(liczbaZawodnikow);
     this->mecze = vector<Mecz>();
     this->zawodnicy = vector<Zawodnik>();
+    this->setId(id);
 }
 
 Turniej::~Turniej()

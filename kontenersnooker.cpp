@@ -1,18 +1,155 @@
-#include "kontenerzawodnik.h"
+#include "kontenersnooker.h"
 
-KontenerZawodnik::KontenerZawodnik()
+KontenerSnooker::KontenerSnooker()
 {
+    this->turnieje = vector<Turniej>();
     this->zawodnicy = vector<Zawodnik>();
     this->pobierzZawodnikow();
+    //this->pobierzTurnieje();
 }
 
-KontenerZawodnik::~KontenerZawodnik(){
+KontenerSnooker::~KontenerSnooker(){
     this->zapiszZawodnikow();
+    //this->zapiszTurnieje();
 }
 
-bool KontenerZawodnik::dodajZawodnika(Zawodnik zawodnik){
+vector<Turniej> KontenerSnooker::getTurnieje() const
+{
+    return turnieje;
+}
+
+void KontenerSnooker::setTurnieje(const vector<Turniej> &value)
+{
+    turnieje = value;
+}
+
+void KontenerSnooker::pobierzTurnieje()
+{
+    xml_document<> doc;
+    xml_node<> * root_node;
+    ifstream plik("turnieje.xml");
+    vector<char> buffer((istreambuf_iterator<char>(plik)), istreambuf_iterator<char>());
+    buffer.push_back('\0');
+    doc.parse<0>(&buffer[0]);
+    root_node = doc.first_node("turnieje");
+    xml_node<> * turniej_node = root_node->first_node("turniej");
+    for (turniej_node; turniej_node; turniej_node = turniej_node->next_sibling())
+    {
+        int id = atoi(turniej_node->first_attribute("id")->value());
+        string nazwa = turniej_node->first_node("nazwa")->value();
+        string sponsor = turniej_node->first_node("sponsor")->value();
+        string miejsce = turniej_node->first_node("miejsce")->value();
+        int najwyzszyBrejkTurnieju = atoi(turniej_node->first_node("najwyzszyBrejkTurnieju")->value());
+        int liczbaZawodnikow = atoi(turniej_node->first_node("liczbaZawodnikow")->value());
+        double pulaNagrod = stod(turniej_node->first_node("pulaNagrod")->value());
+        this->dodajTurniej(Turniej(nazwa,sponsor,miejsce,pulaNagrod,najwyzszyBrejkTurnieju,liczbaZawodnikow,id));
+        xml_node<> * zawodnicy = turniej_node->first_node("zawodnicy");
+        //->first_node("zawodnik");
+        /*xml_node<> * turniej_node = root_node->first_node("turniej");
+        for (zawodnik_node; zawodnik_node; zawodnik_node = zawodnik_node->next_sibling()){
+            int id_zaw = atoi(zawodnik_node->first_node("zawodnik")->value());
+            this->turnieje[turnieje.size()-1].dodajZawodnika(this->getZawodnikId(id_zaw));
+        }*/
+    }
+}
+
+Turniej KontenerSnooker::getTurniej(int index){
+    return this->turnieje[index];
+}
+
+void KontenerSnooker::zapiszTurnieje()
+{
+    xml_document<> doc;
+    xml_node<>* decl = doc.allocate_node(node_declaration);
+    decl->append_attribute(doc.allocate_attribute("version", "1.0"));
+    decl->append_attribute(doc.allocate_attribute("encoding", "UTF-8"));
+    doc.append_node(decl);
+
+    xml_node<> *files = doc.allocate_node(node_element, "turnieje");
+    doc.append_node(files);
+
+    for(int i = 0;i < this->turnieje.size();i++){
+        xml_node<> *turniej = doc.allocate_node(node_element, "turniej");
+        files->append_node(turniej);
+        Turniej tur = this->getTurniej(i);
+
+        string id = to_string(tur.getId());
+        char * idPtr = new char[id.size() + 1];
+        copy(id.begin(), id.end(), idPtr);
+        idPtr[id.size()] = '\0';
+        xml_attribute<> *attr = doc.allocate_attribute("id", idPtr);
+        turniej->append_attribute(attr);
+
+        string name = tur.getNazwa();
+        char * namePtr = new char[name.size() + 1];
+        copy(name.begin(), name.end(), namePtr);
+        namePtr[name.size()] = '\0';
+        xml_node<> *nazwa = doc.allocate_node(node_element, "nazwa",namePtr);
+        turniej->append_node(nazwa);
+
+        string sur = tur.getSponsor();
+        char * surPtr = new char[sur.size() + 1];
+        copy(sur.begin(), sur.end(), surPtr);
+        surPtr[sur.size()] = '\0';
+        xml_node<> *sponsor = doc.allocate_node(node_element, "sponsor",surPtr);
+        turniej->append_node(sponsor);
+
+        string miej = tur.getMiejsce();
+        char * miejPtr = new char[miej.size() + 1];
+        copy(miej.begin(), miej.end(), miejPtr);
+        miejPtr[miej.size()] = '\0';
+        xml_node<> *miejsce = doc.allocate_node(node_element, "miejsce",miejPtr);
+        turniej->append_node(miejsce);
+
+        string zarobki = to_string(tur.getPulaNagrod());
+        int pozycja = zarobki.find(".");
+        zarobki = zarobki.substr(0,pozycja+3);
+        char * zarobkiPtr = new char[zarobki.size() + 1];
+        copy(zarobki.begin(), zarobki.end(), zarobkiPtr);
+        zarobkiPtr[zarobki.size()] = '\0';
+        xml_node<> *pula = doc.allocate_node(node_element, "pulaNagrod",zarobkiPtr);
+        turniej->append_node(pula);
+
+        string brejk = to_string(tur.getNajwyzszyBrejkTurnieju());
+        char * brejkPtr = new char[brejk.size() + 1];
+        copy(brejk.begin(), brejk.end(), brejkPtr);
+        brejkPtr[brejk.size()] = '\0';
+        xml_node<> *maxBrejk = doc.allocate_node(node_element, "najwyzszyBrejkTurnieju",brejkPtr);
+        turniej->append_node(maxBrejk);
+
+        string licz = to_string(tur.getLiczbaZawodnikow());
+        char * liczPtr = new char[licz.size() + 1];
+        copy(licz.begin(), licz.end(), liczPtr);
+        liczPtr[licz.size()] = '\0';
+        xml_node<> *liczba = doc.allocate_node(node_element, "liczbaZawodnikow",liczPtr);
+        turniej->append_node(liczba);
+
+    }
+
+    std::ofstream myfile("turniejeTest.xml");
+    myfile << doc;
+    myfile.close();
+    doc.clear();
+}
+
+void KontenerSnooker::dodajTurniej(Turniej turniej){
+   this->turnieje.push_back(turniej);
+}
+
+int KontenerSnooker::ustalNajwiekszyIdTurnieju()
+{
+    int id = 0;
+    for(int i = 0; i < this->turnieje.size(); i++){
+        if(this->turnieje[i].getId() > id){
+            id = this->turnieje[i].getId();
+        }
+    }
+    return id;
+}
+
+bool KontenerSnooker::dodajZawodnika(Zawodnik zawodnik){
     if(!this->sprawdzZawodnika(zawodnik) && this->walidujZawodnika(zawodnik)){
-        zawodnik.setId(this->ustalNajwiekszyId() + 1);
+        zawodnik.setId(this->ustalNajwiekszyIdZawodnika() + 1);
         this->zawodnicy.push_back(zawodnik);
         return true;
     }
@@ -21,7 +158,17 @@ bool KontenerZawodnik::dodajZawodnika(Zawodnik zawodnik){
     }
 }
 
-void KontenerZawodnik::pobierzZawodnikow(){
+Zawodnik KontenerSnooker::getZawodnikId(int id){
+    Zawodnik zaw = Zawodnik();
+    for(int i = 0; i < this->zawodnicy.size(); i++){
+        if(this->zawodnicy[i].getId() == id){
+            zaw = zawodnicy[i];
+        }
+    }
+    return zaw;
+}
+
+void KontenerSnooker::pobierzZawodnikow(){
     xml_document<> doc;
     xml_node<> * root_node;
     ifstream plik("zawodnicy.xml");
@@ -53,7 +200,7 @@ void KontenerZawodnik::pobierzZawodnikow(){
     }
 }
 
-void KontenerZawodnik::zapiszZawodnikow(){
+void KontenerSnooker::zapiszZawodnikow(){
     xml_document<> doc;
     xml_node<>* decl = doc.allocate_node(node_declaration);
     decl->append_attribute(doc.allocate_attribute("version", "1.0"));
@@ -149,11 +296,11 @@ void KontenerZawodnik::zapiszZawodnikow(){
     doc.clear();
 }
 
-vector<Zawodnik> KontenerZawodnik::getZawodnicy(){
+vector<Zawodnik> KontenerSnooker::getZawodnicy(){
     return this->zawodnicy;
 }
 
-bool KontenerZawodnik::walidujZawodnika(Zawodnik zawodnik){
+bool KontenerSnooker::walidujZawodnika(Zawodnik zawodnik){
     if(zawodnik.getImie().length() > 2 &&
        zawodnik.getNazwisko().length() > 2 &&
        zawodnik.getNarodowosc().length() > 2 &&
@@ -167,7 +314,7 @@ bool KontenerZawodnik::walidujZawodnika(Zawodnik zawodnik){
     }
 }
 
-bool KontenerZawodnik::sprawdzZawodnika(Zawodnik zawodnik){
+bool KontenerSnooker::sprawdzZawodnika(Zawodnik zawodnik){
     bool jest = false;
     for(int i = 0; i < this->zawodnicy.size();i++){
         if(this->zawodnicy[i].getImie() == zawodnik.getImie() &&
@@ -178,7 +325,7 @@ bool KontenerZawodnik::sprawdzZawodnika(Zawodnik zawodnik){
     return jest;
 }
 
-int KontenerZawodnik::ustalNajwiekszyId()
+int KontenerSnooker::ustalNajwiekszyIdZawodnika()
 {
     int id = 0;
     for(int i = 0; i< this->zawodnicy.size(); i++){
@@ -189,11 +336,11 @@ int KontenerZawodnik::ustalNajwiekszyId()
     return id;
 }
 
-Zawodnik KontenerZawodnik::getZawodnik(int index){
+Zawodnik KontenerSnooker::getZawodnik(int index){
     return this->zawodnicy[index];
 }
 
-Zawodnik KontenerZawodnik::getZawodnik(string imie,string nazwisko){
+Zawodnik KontenerSnooker::getZawodnik(string imie,string nazwisko){
     Zawodnik zawodnik = Zawodnik();
     for(int i = 0; i < this->zawodnicy.size();i++){
         if(this->zawodnicy[i].getImie() == imie && this->zawodnicy[i].getNazwisko() == nazwisko){
@@ -201,4 +348,17 @@ Zawodnik KontenerZawodnik::getZawodnik(string imie,string nazwisko){
         }
     }
     return zawodnik;
+}
+
+bool KontenerSnooker::setZawodnik(int index, Zawodnik zaw){
+    if(this->walidujZawodnika(zaw)){
+        this->zawodnicy[index].setImie(zaw.getImie());
+        this->zawodnicy[index].setNazwisko(zaw.getNazwisko());
+        this->zawodnicy[index].setNarodowosc(zaw.getNarodowosc());
+        this->zawodnicy[index].setDataUrodzenia(zaw.getDataUrodzenia());
+        return true;
+    }
+    else{
+        return false;
+    }
 }
