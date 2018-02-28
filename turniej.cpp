@@ -109,9 +109,25 @@ void Turniej::dodajMecz(Mecz mecz)
     this->mecze.push_back(mecz);
 }
 
+Mecz Turniej::getMecz(int index)
+{
+    return this->mecze[index];
+}
+
 void Turniej::dodajZawodnika(Zawodnik zawodnik)
 {
     this->zawodnicy.push_back(zawodnik);
+}
+
+int Turniej::ustalNajwyzszyNrMeczu()
+{
+    int nr = this->mecze[0].getNr();
+    for(int i = 1; i < this->mecze.size();i++){
+        if(mecze[i].getNr() > nr){
+            nr = mecze[i].getNr();
+        }
+    }
+    return nr;
 }
 
 int Turniej::getId() const

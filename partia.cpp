@@ -1,5 +1,15 @@
 #include "partia.h"
 
+int Partia::getNr() const
+{
+    return nr;
+}
+
+void Partia::setNr(int value)
+{
+    nr = value;
+}
+
 Partia::Partia()
 {    
     this->setPunktyZawodnika1(0);
@@ -11,7 +21,7 @@ Partia::Partia()
     this->setZakonczona(false);
 }
 
-Partia:: Partia(int punkty1, int punkty2, int aktualnyBrejk, int dostepnePunkty, int dostepneBileCzerwone, bool aktualnyZawodnik, bool zakonczona){
+Partia:: Partia(int punkty1, int punkty2, int aktualnyBrejk, int dostepnePunkty, int dostepneBileCzerwone, bool aktualnyZawodnik, bool zakonczona, int nr){
     this->setPunktyZawodnika1(punkty1);
     this->setPunktyZawodnika2(punkty2);
     this->setAktualnyBrejk(aktualnyBrejk);
@@ -19,6 +29,7 @@ Partia:: Partia(int punkty1, int punkty2, int aktualnyBrejk, int dostepnePunkty,
     this->setDostepneBileCzerwone(dostepneBileCzerwone);
     this->setAktualnyZawodnik(aktualnyZawodnik);
     this->setZakonczona(zakonczona);
+    this->setNr(nr);
 }
 
 Partia::~Partia(){

@@ -10,10 +10,13 @@ Zalogowany::Zalogowany(QWidget *parent) :
     ui->setupUi(this);
     ui->administratorFrame->setVisible(false);
     ui->zawodnikFrame->setVisible(false);
-    this->kontenerAdministratorzy = KontenerAdministrator();
+    this->kontenerAdministratorzy = KontenerAdministrator();    
     this->dodajAdministratorowDoListy();
+    this->kontenerSnooker = KontenerSnooker();
     this->dodajZawodnikowDoListy();
-
+    this->dodajTurniejeDoListy();
+    //this->dodajZawodnikowTurnieju(0);
+    //this->dodajMeczeTurnieju(0);
     ui->najwyzszyBrejkZawodnikLineEdit->setEnabled(false);
     ui->brejkiStupunktoweZawodnikLineEdit->setEnabled(false);
     ui->brejkiMaksymalneZawodnikLineEdit->setEnabled(false);
@@ -30,6 +33,8 @@ void Zalogowany::setAdministratorIndex(int index){
     this->administratorIndex = index;
 }
 
+
+
 int Zalogowany::getAdministratorIndex(){
     return this->administratorIndex;
 }
@@ -37,7 +42,7 @@ int Zalogowany::getAdministratorIndex(){
 void Zalogowany::dodajAdministratorowDoListy(){
     vector<Administrator> admini = this->kontenerAdministratorzy.getAdministratorzy();
     for(int i=0;i<admini.size();i++){
-        QString qstr = QString::fromStdString(admini[i].getLogin() + " " + admini[i].getHaslo());
+        QString qstr = QString::fromStdString(admini[i].getImie() + " " + admini[i].getNazwisko());
         this->ui->administratorzyListWidget->addItem(qstr);
     }
 }
@@ -119,6 +124,7 @@ void Zalogowany::on_administratorzyListWidget_currentRowChanged(int currentRow)
 
 void Zalogowany::on_pushButton_clicked()
 {
+
     ui->zawodnikFrame->setVisible(true);
     ui->dataUrodzeniaDateEdit->setDate(QDate::currentDate());
     ui->edytujZawodnikaButton->setText("Dodaj");
@@ -193,4 +199,64 @@ void Zalogowany::on_edytujZawodnikaButton_clicked()
             ui->errorZawodnikLabel->setText("Sprawdź poprawność danych");
         }
     }
+}
+
+void Zalogowany::dodajTurniejeDoListy(){
+    for(int i = 0; i < this->kontenerSnooker.getTurnieje().size();i++){
+       ui->turniejeListWidget->addItem(QString::fromStdString(this->kontenerSnooker.getTurniej(i).getSponsor() + " " + this->kontenerSnooker.getTurniej(i).getNazwa()));
+    }
+}
+
+void Zalogowany::dodajZawodnikowTurnieju(int indexTurnieju){
+    Turniej turniej = this->kontenerSnooker.getTurniej(indexTurnieju);
+    vector<Zawodnik> zawodnicy = turniej.getZawodnicy();
+    for(int i = 0; i < zawodnicy.size(); i++){
+        ui->zawodnicyTurniejListWidget->addItem(QString::fromStdString(zawodnicy[i].getImie() + " " + zawodnicy[i].getNazwisko()));
+    }
+}
+
+void Zalogowany::dodajMeczeTurnieju(int indexTurnieju)
+{
+    Turniej turniej = this->kontenerSnooker.getTurniej(indexTurnieju);
+    vector<Mecz> mecze = turniej.getMecze();
+    for(int i = 0; i < mecze.size(); i++){
+        string nazw1 = mecze[i].getZawodnik1().getNazwisko();
+        string nazw2 = mecze[i].getZawodnik2().getNazwisko();
+        string w1 = to_string(mecze[i].getWynik1());
+        string w2 = to_string(mecze[i].getWynik2());
+        QString qStr = QString::fromStdString(nazw1 + " " + w1 + ":" + w2 + " " + nazw2);
+        ui->meczeListWidget->addItem(qStr);
+    }
+}
+
+void Zalogowany::dodajPartieMeczu(int indexTurnieju, int indexMeczu)
+{
+    Turniej turniej = this->kontenerSnooker.getTurniej(indexTurnieju);
+    vector<Partia> partie = turniej.getMecz(indexMeczu).getPartie();
+    for(int i = 0; i < partie.size();i++){
+        string punkty1 = to_string(partie[i].getPunktyZawodnika1());
+        string punkty2= to_string(partie[i].getPunktyZawodnika2());
+        ui->partieListWidget->addItem(QString::fromStdString(punkty1 + ":" + punkty2));
+    }
+}
+
+void Zalogowany::on_turniejeListWidget_currentRowChanged(int currentRow)
+{
+    ui->meczeListWidget->clear();
+    ui->zawodnicyTurniejListWidget->clear();
+    ui->partieListWidget->clear();
+    this->dodajZawodnikowTurnieju(currentRow);
+    this->dodajMeczeTurnieju(currentRow);
+    this->setTurniejIndex(currentRow);
+
+}
+
+int Zalogowany::getTurniejIndex() const
+{
+    return turniejIndex;
+}
+
+void Zalogowany::setTurniejIndex(int value)
+{
+    turniejIndex = value;
 }

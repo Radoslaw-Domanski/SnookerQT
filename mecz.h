@@ -16,10 +16,11 @@ private:
     Zawodnik zawodnik1;
     Zawodnik zawodnik2;
     bool zakonczony;
+    int nr;
 public:
     Mecz();
     Mecz(Zawodnik zawodnik1, Zawodnik zawodnik2, tm dataMeczu, int liczbaPartii,
-         int wynik1 = 0, int wynik2 = 0);
+         int wynik1 = 0, int wynik2 = 0, int nr = 0);
     ~Mecz();
     int getWynik1();
     void setWynik1(int wynik1);
@@ -42,6 +43,8 @@ public:
     Zawodnik getZwyciezca();
     vector<int> getBrejkiStupunktoweGracza1();
     vector<int> getBrejkiStupunktoweGracza2();
+    int getNr() const;
+    void setNr(int value);
 };
 
 #endif // MECZ_H

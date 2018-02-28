@@ -37,7 +37,9 @@ public:
     void setMecze(const vector<Mecz> &value);
     void ustalNajwyzszyBrejkTurnieju();
     void dodajMecz(Mecz mecz);
+    Mecz getMecz(int index);
     void dodajZawodnika(Zawodnik zawodnik);
+    int ustalNajwyzszyNrMeczu();
     int getId() const;
     void setId(int value);
 };

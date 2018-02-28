@@ -17,12 +17,19 @@ public:
     explicit Zalogowany(QWidget *parent = 0);
     void dodajAdministratorowDoListy();
     void dodajZawodnikowDoListy();
+    void dodajTurniejeDoListy();
+    void dodajZawodnikowTurnieju(int indexTurnieju);
+    void dodajMeczeTurnieju(int indexTurnieju);
     void setAdministratorIndex(int index);
+    void dodajPartieMeczu(int indexTurnieju, int indexMeczu);
     int getAdministratorIndex();
     ~Zalogowany();
 
     int getZawodnikIndex() const;
     void setZawodnikIndex(int value);
+
+    int getTurniejIndex() const;
+    void setTurniejIndex(int value);
 
 private slots:
     void on_dodajAdministratora_clicked();
@@ -36,6 +43,8 @@ private slots:
 
     void on_edytujZawodnikaButton_clicked();
 
+    void on_turniejeListWidget_currentRowChanged(int currentRow);
+
 private:
     Ui::Zalogowany *ui;
     KontenerAdministrator kontenerAdministratorzy;
@@ -43,6 +52,7 @@ private:
     KontenerSnooker kontenerSnooker;
     int administratorIndex;
     int zawodnikIndex;
+    int turniejIndex;
 };
 
 #endif // ZALOGOWANY_H

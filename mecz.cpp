@@ -1,11 +1,21 @@
 #include "mecz.h"
 
+int Mecz::getNr() const
+{
+    return nr;
+}
+
+void Mecz::setNr(int value)
+{
+    nr = value;
+}
+
 Mecz::Mecz()
 {
     this->partie = vector<Partia>();
 }
 
-Mecz::Mecz(Zawodnik zawodnik1, Zawodnik zawodnik2, tm dataMeczu, int liczbaPartii, int wynik1, int wynik2){
+Mecz::Mecz(Zawodnik zawodnik1, Zawodnik zawodnik2, tm dataMeczu, int liczbaPartii, int wynik1, int wynik2, int nr){
     this->partie = vector<Partia>();
     this->setZawodnik1(zawodnik1);
     this->setZawodnik2(zawodnik2);
@@ -13,6 +23,7 @@ Mecz::Mecz(Zawodnik zawodnik1, Zawodnik zawodnik2, tm dataMeczu, int liczbaParti
     this->setLiczbaPartii(liczbaPartii);
     this->setWynik1(wynik1);
     this->setWynik2(wynik2);
+    this->setNr(nr);
 }
 
 Mecz::~Mecz(){

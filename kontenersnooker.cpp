@@ -1,11 +1,12 @@
 #include "kontenersnooker.h"
+#include <iostream>
 
 KontenerSnooker::KontenerSnooker()
 {
     this->turnieje = vector<Turniej>();
     this->zawodnicy = vector<Zawodnik>();
     this->pobierzZawodnikow();
-    //this->pobierzTurnieje();
+    this->pobierzTurnieje();
 }
 
 KontenerSnooker::~KontenerSnooker(){
@@ -43,13 +44,11 @@ void KontenerSnooker::pobierzTurnieje()
         int liczbaZawodnikow = atoi(turniej_node->first_node("liczbaZawodnikow")->value());
         double pulaNagrod = stod(turniej_node->first_node("pulaNagrod")->value());
         this->dodajTurniej(Turniej(nazwa,sponsor,miejsce,pulaNagrod,najwyzszyBrejkTurnieju,liczbaZawodnikow,id));
-        xml_node<> * zawodnicy = turniej_node->first_node("zawodnicy");
-        //->first_node("zawodnik");
-        /*xml_node<> * turniej_node = root_node->first_node("turniej");
-        for (zawodnik_node; zawodnik_node; zawodnik_node = zawodnik_node->next_sibling()){
-            int id_zaw = atoi(zawodnik_node->first_node("zawodnik")->value());
-            this->turnieje[turnieje.size()-1].dodajZawodnika(this->getZawodnikId(id_zaw));
-        }*/
+        xml_node<> * zawodnicy_node = turniej_node->first_node("zawodnicy");
+        for(xml_node<> *zawodnik = zawodnicy_node->first_node("zawodnik");zawodnik;zawodnik=zawodnik->next_sibling()){
+            this->turnieje[this->turnieje.size() - 1].dodajZawodnika(this->getZawodnikId(atoi(zawodnik->value())));
+        }
+        this->pobierzMecze(id);
     }
 }
 
@@ -145,6 +144,54 @@ int KontenerSnooker::ustalNajwiekszyIdTurnieju()
         }
     }
     return id;
+}
+
+void KontenerSnooker::pobierzMecze(int idTurnieju)
+{
+    xml_document<> doc;
+    xml_node<> * root_node;
+    ifstream plik("mecze" + to_string(idTurnieju) + ".xml");
+    vector<char> buffer((istreambuf_iterator<char>(plik)), istreambuf_iterator<char>());
+    buffer.push_back('\0');
+    doc.parse<0>(&buffer[0]);
+    root_node = doc.first_node("mecze");
+    xml_node<> * mecz_node = root_node->first_node("mecz");
+    for (mecz_node; mecz_node; mecz_node = mecz_node->next_sibling())
+    {
+        int id = atoi(mecz_node->first_attribute("nr")->value());
+        tm data = tm();
+        int zawodnik1 = atoi(mecz_node->first_node("zawodnik1")->value());
+        int zawodnik2 = atoi(mecz_node->first_node("zawodnik2")->value());
+        int liczbaPartii = atoi(mecz_node->first_node("liczbaPartii")->value());
+        int wynik1 = atoi(mecz_node->first_node("wynik1")->value());
+        int wynik2 = atoi(mecz_node->first_node("wynik2")->value());
+        string dataMeczuStr = mecz_node->first_node("dataMeczu")->value();
+        int dzien = atoi(dataMeczuStr.substr(0,2).c_str());
+        int miesiac = atoi(dataMeczuStr.substr(3,2).c_str());
+        int rok = atoi(dataMeczuStr.substr(6,4).c_str());
+        data.tm_mday = dzien;
+        data.tm_mon = miesiac - 1;
+        data.tm_year = rok - 1900;
+        Zawodnik zaw1 = this->getZawodnikId(zawodnik1);
+        Zawodnik zaw2 = this->getZawodnikId(zawodnik2);
+        Mecz mecz = Mecz(zaw1,zaw2,data,liczbaPartii,wynik1,wynik2,id);
+        cout << mecz.getPartie().size();
+        xml_node<> *partie = mecz_node->first_node("partie");
+        xml_node<> * partia = partie->first_node("partia");
+        for (partia; partia; partia = partia->next_sibling())
+        {
+            int nr = atoi(partia->first_attribute("nr")->value());
+            int punktyZawodnika1 = atoi(partia->first_node("punktyZawodnika1")->value());
+            int punktyZawodnika2 = atoi(partia->first_node("punktyZawodnika2")->value());
+            int aktualnyBrejk = atoi(partia->first_node("aktualnyBrejk")->value());
+            int dostepnePunkty = atoi(partia->first_node("dostepnePunkty")->value());
+            int dostepneBileCzerwone = atoi(partia->first_node("dostepneBileCzerwone")->value());
+            int aktualnyGracz = atoi(partia->first_node("aktualnyGracz")->value());
+            mecz.dodajPartie(Partia(punktyZawodnika1,punktyZawodnika2,aktualnyBrejk,dostepnePunkty,dostepneBileCzerwone,aktualnyGracz,true,nr));
+        }
+        cout << mecz.getPartie().size();
+        this->turnieje[idTurnieju - 1].dodajMecz(mecz);
+    }
 }
 
 bool KontenerSnooker::dodajZawodnika(Zawodnik zawodnik){
@@ -305,7 +352,7 @@ bool KontenerSnooker::walidujZawodnika(Zawodnik zawodnik){
        zawodnik.getNazwisko().length() > 2 &&
        zawodnik.getNarodowosc().length() > 2 &&
        zawodnik.getDataUrodzenia().tm_mday != NULL &&
-       zawodnik.getDataUrodzenia().tm_mon != NULL &&
+       zawodnik.getDataUrodzenia().tm_mon >= 0 &&
        zawodnik.getDataUrodzenia().tm_year != NULL){
         return true;
     }

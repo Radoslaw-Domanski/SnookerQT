@@ -34,9 +34,12 @@ public:
     void setTurnieje(const vector<Turniej> &value);
     void dodajTurniej(Turniej turniej);
     void pobierzTurnieje();
+    //void zapiszTurnieje();
     Turniej getTurniej(int index);
     void zapiszTurnieje();
     int ustalNajwiekszyIdTurnieju();
+    void pobierzMecze(int idTurnieju);
+    //void zapiszMecze(int idTurnieju);
 
 };
 
