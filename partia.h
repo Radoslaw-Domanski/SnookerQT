@@ -23,7 +23,6 @@ public:
     int getDostepneBileCzerwone();
     bool getAktualnyZawodnik();
     bool getZakonczona();
-
     void setPunktyZawodnika1(int punkty);
     void setPunktyZawodnika2(int punkty);
     void setAktualnyBrejk(int punkty);
@@ -31,6 +30,8 @@ public:
     void setDostepneBileCzerwone(int bile);
     void setAktualnyZawodnik(bool zawodnik);
     void setZakonczona(bool zakonczona);
+    int getNr() const;
+    void setNr(int value);
 
     void zmienZawodnika();
     void wbijBileCzerwona();
@@ -39,8 +40,7 @@ public:
     void zakonczPartie();
     void edytujPartie(Partia partia);
     ~Partia();
-    int getNr() const;
-    void setNr(int value);
+
 };
 
 #endif // PARTIA_H

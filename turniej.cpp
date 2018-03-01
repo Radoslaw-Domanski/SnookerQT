@@ -60,16 +60,6 @@ void Turniej::setLiczbaZawodnikow(int value)
     liczbaZawodnikow = value;
 }
 
-vector<Zawodnik> Turniej::getZawodnicy() const
-{
-    return zawodnicy;
-}
-
-void Turniej::setZawodnicy(const vector<Zawodnik> &value)
-{
-    zawodnicy = value;
-}
-
 vector<Mecz> Turniej::getMecze() const
 {
     return mecze;
@@ -114,9 +104,9 @@ Mecz Turniej::getMecz(int index)
     return this->mecze[index];
 }
 
-void Turniej::dodajZawodnika(Zawodnik zawodnik)
+void Turniej::dodajZawodnika(int id)
 {
-    this->zawodnicy.push_back(zawodnik);
+    this->zawodnicy.push_back(id);
 }
 
 int Turniej::ustalNajwyzszyNrMeczu()
@@ -140,11 +130,21 @@ void Turniej::setId(int value)
     id = value;
 }
 
+vector<int> Turniej::getZawodnicy() const
+{
+    return zawodnicy;
+}
+
+void Turniej::setZawodnicy(const vector<int> &value)
+{
+    zawodnicy = value;
+}
+
 Turniej::Turniej()
 {
     this->setId(0);
     this->mecze = vector<Mecz>();
-    this->zawodnicy = vector<Zawodnik>();
+    this->zawodnicy = vector<int>();
 }
 
 Turniej::Turniej(string nazwa, string sponsor, string miejsce, double pulaNagrod, int najwyzszyBrejkTurnieju, int liczbaZawodnikow, int id)
@@ -156,7 +156,7 @@ Turniej::Turniej(string nazwa, string sponsor, string miejsce, double pulaNagrod
     this->setNajwyzszyBrejkTurnieju(najwyzszyBrejkTurnieju);
     this->setLiczbaZawodnikow(liczbaZawodnikow);
     this->mecze = vector<Mecz>();
-    this->zawodnicy = vector<Zawodnik>();
+    this->zawodnicy = vector<int>();
     this->setId(id);
 }
 

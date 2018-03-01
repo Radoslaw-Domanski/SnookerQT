@@ -13,13 +13,13 @@ private:
     int liczbaPartii;
     tm dataMeczu;
     vector<Partia> partie;
-    Zawodnik zawodnik1;
-    Zawodnik zawodnik2;
+    int zawodnik1;
+    int zawodnik2;
     bool zakonczony;
     int nr;
 public:
     Mecz();
-    Mecz(Zawodnik zawodnik1, Zawodnik zawodnik2, tm dataMeczu, int liczbaPartii,
+    Mecz(int zawodnik1, int zawodnik2, tm dataMeczu, int liczbaPartii,
          int wynik1 = 0, int wynik2 = 0, int nr = 0);
     ~Mecz();
     int getWynik1();
@@ -31,20 +31,22 @@ public:
     tm getDataMeczu();
     void setDataMeczu(tm dataMeczu);
     vector<Partia> getPartie();
-    Zawodnik getZawodnik1();
-    void setZawodnik1(Zawodnik zawodnik1);
-    Zawodnik getZawodnik2();
-    void setZawodnik2(Zawodnik zawodnik2);
+    int getNr() const;
+    void setNr(int value);
+
     void dodajPartie(Partia partia);
-    void dodajWynik(Zawodnik zawodnik);
+    void dodajWynik(int zawodnik);
     void zakonczMecz();
     Partia getPartia(int index);
     void setPartia(int index, Partia partia);
-    Zawodnik getZwyciezca();
+    int getZwyciezca();
     vector<int> getBrejkiStupunktoweGracza1();
     vector<int> getBrejkiStupunktoweGracza2();
-    int getNr() const;
-    void setNr(int value);
+
+    int getZawodnik1() const;
+    void setZawodnik1(int value);
+    int getZawodnik2() const;
+    void setZawodnik2(int value);
 };
 
 #endif // MECZ_H

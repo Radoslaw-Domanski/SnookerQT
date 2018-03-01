@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "konteneradministrator.h"
 #include "kontenersnooker.h"
+#include "kontenerturniej.h"
+#include "kontenerzawodnik.h"
 
 namespace Ui {
 class Zalogowany;
@@ -48,8 +50,9 @@ private slots:
 private:
     Ui::Zalogowany *ui;
     KontenerAdministrator kontenerAdministratorzy;
-    //KontenerZawodnik kontenerZawodnicy;
-    KontenerSnooker kontenerSnooker;
+    KontenerZawodnik kontenerZawodnicy;
+    KontenerTurniej kontenerTurniej;
+    //KontenerSnooker kontenerSnooker;
     int administratorIndex;
     int zawodnikIndex;
     int turniejIndex;

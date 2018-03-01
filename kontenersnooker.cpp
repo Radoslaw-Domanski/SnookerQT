@@ -46,7 +46,7 @@ void KontenerSnooker::pobierzTurnieje()
         this->dodajTurniej(Turniej(nazwa,sponsor,miejsce,pulaNagrod,najwyzszyBrejkTurnieju,liczbaZawodnikow,id));
         xml_node<> * zawodnicy_node = turniej_node->first_node("zawodnicy");
         for(xml_node<> *zawodnik = zawodnicy_node->first_node("zawodnik");zawodnik;zawodnik=zawodnik->next_sibling()){
-            this->turnieje[this->turnieje.size() - 1].dodajZawodnika(this->getZawodnikId(atoi(zawodnik->value())));
+            this->turnieje[this->turnieje.size() - 1].dodajZawodnika(atoi(zawodnik->value()));
         }
         this->pobierzMecze(id);
     }
@@ -172,9 +172,9 @@ void KontenerSnooker::pobierzMecze(int idTurnieju)
         data.tm_mday = dzien;
         data.tm_mon = miesiac - 1;
         data.tm_year = rok - 1900;
-        Zawodnik zaw1 = this->getZawodnikId(zawodnik1);
-        Zawodnik zaw2 = this->getZawodnikId(zawodnik2);
-        Mecz mecz = Mecz(zaw1,zaw2,data,liczbaPartii,wynik1,wynik2,id);
+        //Zawodnik zaw1 = this->getZawodnikId(zawodnik1);
+        //Zawodnik zaw2 = this->getZawodnikId(zawodnik2);
+        Mecz mecz = Mecz(zawodnik1,zawodnik2,data,liczbaPartii,wynik1,wynik2,id);
         cout << mecz.getPartie().size();
         xml_node<> *partie = mecz_node->first_node("partie");
         xml_node<> * partia = partie->first_node("partia");

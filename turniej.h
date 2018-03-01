@@ -13,7 +13,7 @@ private:
     double pulaNagrod;
     int najwyzszyBrejkTurnieju;
     int liczbaZawodnikow;
-    vector<Zawodnik> zawodnicy;
+    vector<int> zawodnicy;
     vector<Mecz> mecze;
 public:
     Turniej();
@@ -31,17 +31,19 @@ public:
     void setNajwyzszyBrejkTurnieju(int value);
     int getLiczbaZawodnikow() const;
     void setLiczbaZawodnikow(int value);
-    vector<Zawodnik> getZawodnicy() const;
-    void setZawodnicy(const vector<Zawodnik> &value);
     vector<Mecz> getMecze() const;
     void setMecze(const vector<Mecz> &value);
+    int getId() const;
+    void setId(int value);
+
     void ustalNajwyzszyBrejkTurnieju();
     void dodajMecz(Mecz mecz);
     Mecz getMecz(int index);
-    void dodajZawodnika(Zawodnik zawodnik);
+    void dodajZawodnika(int id);
     int ustalNajwyzszyNrMeczu();
-    int getId() const;
-    void setId(int value);
+
+    vector<int> getZawodnicy() const;
+    void setZawodnicy(const vector<int> &value);
 };
 
 #endif // TURNIEJ_H

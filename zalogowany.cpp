@@ -12,7 +12,9 @@ Zalogowany::Zalogowany(QWidget *parent) :
     ui->zawodnikFrame->setVisible(false);
     this->kontenerAdministratorzy = KontenerAdministrator();    
     this->dodajAdministratorowDoListy();
-    this->kontenerSnooker = KontenerSnooker();
+    //this->kontenerSnooker = KontenerSnooker();
+    this->kontenerTurniej = KontenerTurniej();
+    this->kontenerZawodnicy = KontenerZawodnik();
     this->dodajZawodnikowDoListy();
     this->dodajTurniejeDoListy();
     //this->dodajZawodnikowTurnieju(0);
@@ -48,7 +50,7 @@ void Zalogowany::dodajAdministratorowDoListy(){
 }
 
 void Zalogowany::dodajZawodnikowDoListy(){
-    vector<Zawodnik> zawodnicy = this->kontenerSnooker.getZawodnicy();
+    vector<Zawodnik> zawodnicy = this->kontenerZawodnicy.getZawodnicy();
     for(int i=0;i<zawodnicy.size();i++){
         QString qstr = QString::fromStdString(zawodnicy[i].getImie() + " " + zawodnicy[i].getNazwisko());
         this->ui->zawodnicyListWidget->addItem(qstr);
@@ -144,7 +146,7 @@ void Zalogowany::on_zawodnicyListWidget_currentRowChanged(int currentRow)
 {
     this->setZawodnikIndex(currentRow);
     ui->zawodnikFrame->setVisible(true);
-    Zawodnik zawodnik = this->kontenerSnooker.getZawodnik(currentRow);
+    Zawodnik zawodnik = this->kontenerZawodnicy.getZawodnik(currentRow);
     ui->imieZawodnikLineEdit->setText(QString::fromStdString(zawodnik.getImie()));
     ui->nazwiskoZawodnikLineEdit->setText(QString::fromStdString(zawodnik.getNazwisko()));
     string zarobki = to_string(zawodnik.getZarobki());
@@ -164,7 +166,7 @@ void Zalogowany::on_zawodnicyListWidget_currentRowChanged(int currentRow)
 
 void Zalogowany::on_edytujZawodnikaButton_clicked()
 {
-    int id = this->kontenerSnooker.ustalNajwiekszyIdZawodnika() + 1;
+    int id = this->kontenerZawodnicy.ustalNajwiekszyIdZawodnika() + 1;
     int rok = ui->dataUrodzeniaDateEdit->date().year();
     int miesiac = ui->dataUrodzeniaDateEdit->date().month();
     int dzien = ui->dataUrodzeniaDateEdit->date().day();
@@ -177,7 +179,7 @@ void Zalogowany::on_edytujZawodnikaButton_clicked()
     data.tm_year = rok - 1900;
     if(ui->edytujZawodnikaButton->text() == "Edytuj"){
         Zawodnik zaw = Zawodnik(imie,nazwisko,narodowosc,data,0,0,0,0.0,0);
-        if(this->kontenerSnooker.setZawodnik(this->zawodnikIndex,zaw)){
+        if(this->kontenerZawodnicy.setZawodnik(this->zawodnikIndex,zaw)){
             DodanieAdminaPowodzenie *powodzenie = new DodanieAdminaPowodzenie(this);
             powodzenie->show();
             ui->errorZawodnikLabel->setText("");
@@ -189,7 +191,7 @@ void Zalogowany::on_edytujZawodnikaButton_clicked()
     }
     else if(ui->edytujZawodnikaButton->text() == "Dodaj"){
         Zawodnik zaw = Zawodnik(imie,nazwisko,narodowosc,data,0,0,0,0.0,id);
-        if(this->kontenerSnooker.dodajZawodnika(zaw)){
+        if(this->kontenerZawodnicy.dodajZawodnika(zaw)){
             DodanieAdminaPowodzenie *powodzenie = new DodanieAdminaPowodzenie(this);
             powodzenie->show();
             ui->zawodnicyListWidget->addItem(QString::fromStdString(imie + " " + nazwisko));
@@ -202,36 +204,37 @@ void Zalogowany::on_edytujZawodnikaButton_clicked()
 }
 
 void Zalogowany::dodajTurniejeDoListy(){
-    for(int i = 0; i < this->kontenerSnooker.getTurnieje().size();i++){
-       ui->turniejeListWidget->addItem(QString::fromStdString(this->kontenerSnooker.getTurniej(i).getSponsor() + " " + this->kontenerSnooker.getTurniej(i).getNazwa()));
+    for(int i = 0; i < this->kontenerTurniej.getTurnieje().size();i++){
+       ui->turniejeListWidget->addItem(QString::fromStdString(this->kontenerTurniej.getTurniej(i).getSponsor() + " " + this->kontenerTurniej.getTurniej(i).getNazwa()));
     }
 }
 
 void Zalogowany::dodajZawodnikowTurnieju(int indexTurnieju){
-    Turniej turniej = this->kontenerSnooker.getTurniej(indexTurnieju);
-    vector<Zawodnik> zawodnicy = turniej.getZawodnicy();
+    Turniej turniej = this->kontenerTurniej.getTurniej(indexTurnieju);
+    vector<int> zawodnicy = turniej.getZawodnicy();
     for(int i = 0; i < zawodnicy.size(); i++){
-        ui->zawodnicyTurniejListWidget->addItem(QString::fromStdString(zawodnicy[i].getImie() + " " + zawodnicy[i].getNazwisko()));
+        Zawodnik zaw = this->kontenerZawodnicy.getZawodnikId(zawodnicy[i]);
+        ui->zawodnicyTurniejListWidget->addItem(QString::fromStdString(zaw.getImie() + " " + zaw.getNazwisko()));
     }
 }
 
 void Zalogowany::dodajMeczeTurnieju(int indexTurnieju)
 {
-    Turniej turniej = this->kontenerSnooker.getTurniej(indexTurnieju);
+    Turniej turniej = this->kontenerTurniej.getTurniej(indexTurnieju);
     vector<Mecz> mecze = turniej.getMecze();
     for(int i = 0; i < mecze.size(); i++){
-        string nazw1 = mecze[i].getZawodnik1().getNazwisko();
-        string nazw2 = mecze[i].getZawodnik2().getNazwisko();
+        Zawodnik zaw1 = this->kontenerZawodnicy.getZawodnikId(mecze[i].getZawodnik1());
+        Zawodnik zaw2 = this->kontenerZawodnicy.getZawodnikId(mecze[i].getZawodnik2());
         string w1 = to_string(mecze[i].getWynik1());
         string w2 = to_string(mecze[i].getWynik2());
-        QString qStr = QString::fromStdString(nazw1 + " " + w1 + ":" + w2 + " " + nazw2);
+        QString qStr = QString::fromStdString(zaw1.getNazwisko() + " " + w1 + ":" + w2 + " " + zaw2.getNazwisko());
         ui->meczeListWidget->addItem(qStr);
     }
 }
 
 void Zalogowany::dodajPartieMeczu(int indexTurnieju, int indexMeczu)
 {
-    Turniej turniej = this->kontenerSnooker.getTurniej(indexTurnieju);
+    Turniej turniej = this->kontenerTurniej.getTurniej(indexTurnieju);
     vector<Partia> partie = turniej.getMecz(indexMeczu).getPartie();
     for(int i = 0; i < partie.size();i++){
         string punkty1 = to_string(partie[i].getPunktyZawodnika1());

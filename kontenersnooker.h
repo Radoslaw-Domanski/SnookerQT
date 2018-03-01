@@ -19,8 +19,11 @@ private:
 public:
     KontenerSnooker();
     ~KontenerSnooker();
-    bool dodajZawodnika(Zawodnik zawodnik);
+    vector<Turniej> getTurnieje() const;
+    void setTurnieje(const vector<Turniej> &value);
     vector<Zawodnik> getZawodnicy();
+
+    bool dodajZawodnika(Zawodnik zawodnik);
     bool walidujZawodnika(Zawodnik zawodnik);
     void pobierzZawodnikow();
     void zapiszZawodnikow();
@@ -30,16 +33,14 @@ public:
     Zawodnik getZawodnik(string imie, string nazwisko);
     bool sprawdzZawodnika(Zawodnik zawodnik);
     int ustalNajwiekszyIdZawodnika();
-    vector<Turniej> getTurnieje() const;
-    void setTurnieje(const vector<Turniej> &value);
+
     void dodajTurniej(Turniej turniej);
     void pobierzTurnieje();
-    //void zapiszTurnieje();
-    Turniej getTurniej(int index);
     void zapiszTurnieje();
+    Turniej getTurniej(int index);    
     int ustalNajwiekszyIdTurnieju();
     void pobierzMecze(int idTurnieju);
-    //void zapiszMecze(int idTurnieju);
+    void zapiszMecze(int idTurnieju);
 
 };
 

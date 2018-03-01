@@ -10,12 +10,32 @@ void Mecz::setNr(int value)
     nr = value;
 }
 
+int Mecz::getZawodnik1() const
+{
+    return zawodnik1;
+}
+
+void Mecz::setZawodnik1(int value)
+{
+    zawodnik1 = value;
+}
+
+int Mecz::getZawodnik2() const
+{
+    return zawodnik2;
+}
+
+void Mecz::setZawodnik2(int value)
+{
+    zawodnik2 = value;
+}
+
 Mecz::Mecz()
 {
     this->partie = vector<Partia>();
 }
 
-Mecz::Mecz(Zawodnik zawodnik1, Zawodnik zawodnik2, tm dataMeczu, int liczbaPartii, int wynik1, int wynik2, int nr){
+Mecz::Mecz(int zawodnik1, int zawodnik2, tm dataMeczu, int liczbaPartii, int wynik1, int wynik2, int nr){
     this->partie = vector<Partia>();
     this->setZawodnik1(zawodnik1);
     this->setZawodnik2(zawodnik2);
@@ -34,8 +54,8 @@ void Mecz::dodajPartie(Partia partia){
     this->partie.push_back(partia);
 }
 
-void Mecz::dodajWynik(Zawodnik zawodnik){
-    if(this->zawodnik1.getNazwisko() == zawodnik.getNazwisko() && this->zawodnik1.getImie() == zawodnik.getImie()){
+void Mecz::dodajWynik(int zawodnik){
+    if(this->getZawodnik1() == zawodnik){
         this->setWynik1(this->getWynik1() + 1);
     }
     else{
@@ -75,22 +95,6 @@ int Mecz::getWynik2(){
     return this->wynik2;
 }
 
-Zawodnik Mecz::getZawodnik1(){
-    return this->zawodnik1;
-}
-
-void Mecz::setZawodnik1(Zawodnik zawodnik1){
-    this->zawodnik1 = zawodnik1;
-}
-
-void Mecz::setZawodnik2(Zawodnik zawodnik2){
-    this->zawodnik2 = zawodnik2;
-}
-
-Zawodnik Mecz::getZawodnik2(){
-    return this->zawodnik2;
-}
-
 void Mecz::setDataMeczu(tm dataMeczu){
     this->dataMeczu = dataMeczu;
 }
@@ -104,14 +108,14 @@ void Mecz::setPartia(int index, Partia partia){
     this->partie[index].edytujPartie(partia);
 }
 
-Zawodnik Mecz::getZwyciezca(){
+int Mecz::getZwyciezca(){
     if(this->getWynik1() > this->getWynik2()){
         return this->zawodnik1;
     }
     else if (this->getWynik2() > this->getWynik1()){
         return this->zawodnik2;
     }
-    else return Zawodnik();
+    else return -1;
 }
 
 vector<int> Mecz::getBrejkiStupunktoweGracza1(){
