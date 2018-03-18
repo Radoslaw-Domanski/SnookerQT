@@ -573,7 +573,7 @@
         <x>190</x>
         <y>240</y>
         <width>371</width>
-        <height>211</height>
+        <height>221</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -600,7 +600,7 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>113</width>
+         <width>151</width>
          <height>20</height>
         </rect>
        </property>
@@ -623,7 +623,7 @@
         <rect>
          <x>10</x>
          <y>80</y>
-         <width>113</width>
+         <width>151</width>
          <height>20</height>
         </rect>
        </property>
@@ -646,7 +646,7 @@
         <rect>
          <x>10</x>
          <y>130</y>
-         <width>113</width>
+         <width>151</width>
          <height>20</height>
         </rect>
        </property>
@@ -654,20 +654,20 @@
       <widget class="QLabel" name="pulaNagrodTurniejLabel">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>170</x>
          <y>10</y>
          <width>111</width>
          <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Pula Nagród</string>
+        <string>Pula Nagród (PLN)</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="pulaNagrodTurniejLineEdit">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>170</x>
          <y>30</y>
          <width>113</width>
          <height>20</height>
@@ -677,7 +677,7 @@
       <widget class="QLabel" name="najwyzszyBrejkTurniejLabel">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>170</x>
          <y>60</y>
          <width>91</width>
          <height>16</height>
@@ -690,7 +690,7 @@
       <widget class="QLineEdit" name="najwyzszyBrejkTurniejLineEdit">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>170</x>
          <y>80</y>
          <width>113</width>
          <height>20</height>
@@ -700,7 +700,7 @@
       <widget class="QLabel" name="liczbaZawodnikowTurniejLabel">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>170</x>
          <y>110</y>
          <width>111</width>
          <height>16</height>
@@ -710,16 +710,65 @@
         <string>Liczba Zawodników</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="pulaNagrodTurniejLineEdit_4">
+      <widget class="QLineEdit" name="liczbaZawodnikowTurniejLineEdit">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>170</x>
          <y>130</y>
          <width>113</width>
          <height>20</height>
         </rect>
        </property>
       </widget>
+      <widget class="QPushButton" name="edytujTurniejButton">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>160</y>
+         <width>111</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Dodaj</string>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="dodajZawodnikaListWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>160</y>
+         <width>151</width>
+         <height>41</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="dodajZawodnikaPushButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>200</y>
+         <width>151</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Dodaj Do Turnieju</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="dodajTurniejButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>230</y>
+        <width>171</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dodaj Turniej</string>
+      </property>
      </widget>
     </widget>
    </widget>

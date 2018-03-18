@@ -18,7 +18,7 @@ KontenerTurniej::KontenerTurniej()
 
 KontenerTurniej::~KontenerTurniej()
 {
-    //this->zapiszTurnieje();
+    this->zapiszTurnieje();
 }
 
 
@@ -121,6 +121,18 @@ void KontenerTurniej::zapiszTurnieje()
         xml_node<> *liczba = doc.allocate_node(node_element, "liczbaZawodnikow",liczPtr);
         turniej->append_node(liczba);
 
+        xml_node<> *zawodnicy = doc.allocate_node(node_element, "zawodnicy");
+        turniej->append_node(zawodnicy);
+
+        vector<int> listaZawodnikow = tur.getZawodnicy();
+        for(int i = 0; i < listaZawodnikow.size();i++){
+            string id = to_string(listaZawodnikow[i]);
+            char * idPtr = new char[id.size() + 1];
+            copy(id.begin(), id.end(), idPtr);
+            idPtr[id.size()] = '\0';
+            xml_node<> *idik = doc.allocate_node(node_element, "zawodnik",idPtr);
+            zawodnicy->append_node(idik);
+        }
     }
 
     std::ofstream myfile("turniejeTest.xml");

@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "konteneradministrator.h"
-#include "kontenersnooker.h"
 #include "kontenerturniej.h"
 #include "kontenerzawodnik.h"
 
@@ -24,7 +23,11 @@ public:
     void dodajMeczeTurnieju(int indexTurnieju);
     void setAdministratorIndex(int index);
     void dodajPartieMeczu(int indexTurnieju, int indexMeczu);
+    void wyswietlTurniej();
+    void schowajTurniej();
+    void ustalZawodnikowWLiscie();
     int getAdministratorIndex();
+    bool walidujTurniej(Turniej turniej);
     ~Zalogowany();
 
     int getZawodnikIndex() const;
@@ -32,6 +35,12 @@ public:
 
     int getTurniejIndex() const;
     void setTurniejIndex(int value);
+
+    int getMeczIndex() const;
+    void setMeczIndex(int value);
+
+    int getPartiaIndex() const;
+    void setPartiaIndex(int value);
 
 private slots:
     void on_dodajAdministratora_clicked();
@@ -47,15 +56,30 @@ private slots:
 
     void on_turniejeListWidget_currentRowChanged(int currentRow);
 
+    void on_meczeListWidget_currentRowChanged(int currentRow);
+
+    void on_partieListWidget_currentRowChanged(int currentRow);
+
+    void on_dodajTurniejButton_clicked();
+
+    void on_edytujTurniejButton_clicked();
+
+    void on_dodajZawodnikaListWidget_currentRowChanged(int currentRow);
+
+    void on_dodajZawodnikaPushButton_clicked();
+
 private:
     Ui::Zalogowany *ui;
     KontenerAdministrator kontenerAdministratorzy;
     KontenerZawodnik kontenerZawodnicy;
     KontenerTurniej kontenerTurniej;
-    //KontenerSnooker kontenerSnooker;
+    Turniej turniejTmp;
     int administratorIndex;
     int zawodnikIndex;
     int turniejIndex;
+    int meczIndex;
+    int partiaIndex;
+    int dodawanyZawodnikIndex;
 };
 
 #endif // ZALOGOWANY_H

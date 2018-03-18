@@ -23,7 +23,6 @@ SOURCES += main.cpp\
     mecz.cpp \
     konteneradministrator.cpp \
     turniej.cpp \
-    kontenersnooker.cpp \
     kontenerzawodnik.cpp \
     kontenerturniej.cpp
 
@@ -37,7 +36,6 @@ HEADERS  += logowanie.h \
     mecz.h \
     konteneradministrator.h \
     turniej.h \
-    kontenersnooker.h \
     kontenerzawodnik.h \
     kontenerturniej.h
 

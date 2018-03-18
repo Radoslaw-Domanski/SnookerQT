@@ -120,6 +120,16 @@ int Turniej::ustalNajwyzszyNrMeczu()
     return nr;
 }
 
+void Turniej::losujDrabinkeTurnieju()
+{
+    if(this->zawodnicy.size() == 2){
+        time_t current_time;
+        struct tm  local_time;
+
+        this->mecze.push_back(Mecz(this->zawodnicy[0],this->zawodnicy[1],local_time,5));
+    }
+}
+
 int Turniej::getId() const
 {
     return id;

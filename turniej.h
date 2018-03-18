@@ -42,6 +42,8 @@ public:
     void dodajZawodnika(int id);
     int ustalNajwyzszyNrMeczu();
 
+    void losujDrabinkeTurnieju();
+
     vector<int> getZawodnicy() const;
     void setZawodnicy(const vector<int> &value);
 };

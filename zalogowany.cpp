@@ -1,7 +1,6 @@
 #include "zalogowany.h"
 #include "ui_zalogowany.h"
 #include "dodanieadminapowodzenie.h"
-#include <kontenersnooker.h>
 
 Zalogowany::Zalogowany(QWidget *parent) :
     QMainWindow(parent),
@@ -12,17 +11,17 @@ Zalogowany::Zalogowany(QWidget *parent) :
     ui->zawodnikFrame->setVisible(false);
     this->kontenerAdministratorzy = KontenerAdministrator();    
     this->dodajAdministratorowDoListy();
-    //this->kontenerSnooker = KontenerSnooker();
     this->kontenerTurniej = KontenerTurniej();
     this->kontenerZawodnicy = KontenerZawodnik();
     this->dodajZawodnikowDoListy();
     this->dodajTurniejeDoListy();
-    //this->dodajZawodnikowTurnieju(0);
-    //this->dodajMeczeTurnieju(0);
     ui->najwyzszyBrejkZawodnikLineEdit->setEnabled(false);
     ui->brejkiStupunktoweZawodnikLineEdit->setEnabled(false);
     ui->brejkiMaksymalneZawodnikLineEdit->setEnabled(false);
     ui->zarobkiZawodnikLineEdit->setEnabled(false);
+    ui->turniejFrame->setVisible(false);
+    ui->liczbaZawodnikowTurniejLineEdit->setEnabled(false);
+    ui->najwyzszyBrejkTurniejLineEdit->setEnabled(false);
 }
 
 Zalogowany::~Zalogowany()
@@ -39,6 +38,20 @@ void Zalogowany::setAdministratorIndex(int index){
 
 int Zalogowany::getAdministratorIndex(){
     return this->administratorIndex;
+}
+
+bool Zalogowany::walidujTurniej(Turniej turniej)
+{
+    if(turniej.getNazwa().length() < 3){
+        return false;
+    }
+    if(turniej.getSponsor().length() < 3){
+        return false;
+    }
+    if(turniej.getZawodnicy().size() != turniej.getLiczbaZawodnikow()){
+        return false;
+    }
+    return true;
 }
 
 void Zalogowany::dodajAdministratorowDoListy(){
@@ -204,6 +217,7 @@ void Zalogowany::on_edytujZawodnikaButton_clicked()
 }
 
 void Zalogowany::dodajTurniejeDoListy(){
+    this->ui->turniejeListWidget->clear();
     for(int i = 0; i < this->kontenerTurniej.getTurnieje().size();i++){
        ui->turniejeListWidget->addItem(QString::fromStdString(this->kontenerTurniej.getTurniej(i).getSponsor() + " " + this->kontenerTurniej.getTurniej(i).getNazwa()));
     }
@@ -243,15 +257,42 @@ void Zalogowany::dodajPartieMeczu(int indexTurnieju, int indexMeczu)
     }
 }
 
+void Zalogowany::wyswietlTurniej()
+{
+    Turniej turniej = this->kontenerTurniej.getTurniej(this->getTurniejIndex());
+    ui->nazwaTurniejLineEdit->setText(QString::fromStdString(turniej.getNazwa()));
+    ui->sponsorTurniejLineEdit->setText(QString::fromStdString(turniej.getSponsor()));
+    ui->miejsceTurniejLineEdit->setText(QString::fromStdString(turniej.getMiejsce()));
+    string pula = to_string(turniej.getPulaNagrod());
+    int kropkaIndex = pula.find(".");
+    pula = pula.substr(0,kropkaIndex+3);
+    ui->pulaNagrodTurniejLineEdit->setText(QString::fromStdString(pula));
+    ui->najwyzszyBrejkTurniejLineEdit->setText(QString::fromStdString(to_string(turniej.getNajwyzszyBrejkTurnieju())));
+    ui->liczbaZawodnikowTurniejLineEdit->setText(QString::fromStdString(to_string(turniej.getLiczbaZawodnikow())));
+}
+
+void Zalogowany::schowajTurniej()
+{
+    ui->turniejFrame->setVisible(false);
+}
+
 void Zalogowany::on_turniejeListWidget_currentRowChanged(int currentRow)
 {
+    this->setMeczIndex(-1);
+    this->setPartiaIndex(-1);
     ui->meczeListWidget->clear();
     ui->zawodnicyTurniejListWidget->clear();
     ui->partieListWidget->clear();
     this->dodajZawodnikowTurnieju(currentRow);
     this->dodajMeczeTurnieju(currentRow);
     this->setTurniejIndex(currentRow);
-
+    this->wyswietlTurniej();
+    ui->turniejFrame->setVisible(true);
+    ui->dodajZawodnikaListWidget->setEnabled(false);
+    ui->dodajZawodnikaPushButton->setEnabled(false);
+    ui->liczbaZawodnikowTurniejLineEdit->setEnabled(false);
+    ui->najwyzszyBrejkTurniejLineEdit->setEnabled(false);
+    ui->edytujTurniejButton->setText("Edytuj");
 }
 
 int Zalogowany::getTurniejIndex() const
@@ -262,4 +303,118 @@ int Zalogowany::getTurniejIndex() const
 void Zalogowany::setTurniejIndex(int value)
 {
     turniejIndex = value;
+}
+
+void Zalogowany::on_meczeListWidget_currentRowChanged(int currentRow)
+{
+    this->setMeczIndex(currentRow);
+    this->setPartiaIndex(-1);
+    this->dodajPartieMeczu(this->getTurniejIndex(),currentRow);
+    this->schowajTurniej();
+}
+
+int Zalogowany::getPartiaIndex() const
+{
+    return partiaIndex;
+}
+
+void Zalogowany::setPartiaIndex(int value)
+{
+    partiaIndex = value;
+}
+
+int Zalogowany::getMeczIndex() const
+{
+    return meczIndex;
+}
+
+void Zalogowany::setMeczIndex(int value)
+{
+    meczIndex = value;
+}
+
+void Zalogowany::on_partieListWidget_currentRowChanged(int currentRow)
+{
+    this->setPartiaIndex(currentRow);
+    this->schowajTurniej();
+}
+
+
+void Zalogowany::on_dodajTurniejButton_clicked()
+{
+    this->turniejTmp = Turniej();
+    ui->nazwaTurniejLineEdit->setText("");
+    ui->sponsorTurniejLineEdit->setText("");
+    ui->miejsceTurniejLineEdit->setText("");
+    ui->pulaNagrodTurniejLineEdit->setText("");
+    ui->najwyzszyBrejkTurniejLineEdit->setText("");
+    ui->liczbaZawodnikowTurniejLineEdit->setText("");
+    ui->turniejFrame->setVisible(true);
+    ui->liczbaZawodnikowTurniejLineEdit->setEnabled(true);
+    ui->dodajZawodnikaListWidget->setEnabled(true);
+    ui->dodajZawodnikaPushButton->setEnabled(true);
+    ui->edytujTurniejButton->setText("Dodaj");
+    ui->zawodnicyTurniejListWidget->clear();
+    ui->partieListWidget->clear();
+    this->setTurniejIndex(-1);
+    this->setMeczIndex(-1);
+    //ui->meczeListWidget->clear();
+    ui->turniejFrame->show();
+
+    this->ui->dodajZawodnikaListWidget->clear();
+    vector<Zawodnik> zawodnicy = this->kontenerZawodnicy.getZawodnicy();
+    for(int i =0; i < zawodnicy.size();i++){
+        ui->dodajZawodnikaListWidget->addItem(QString::fromStdString(zawodnicy[i].getImie()+ " " + zawodnicy[i].getNazwisko()));
+    }
+}
+
+
+void ustalZawodnikowWLiscie(){
+
+}
+
+void Zalogowany::on_edytujTurniejButton_clicked()
+{
+    if(ui->edytujTurniejButton->text() == "Dodaj"){
+        this->turniejTmp.setNazwa(ui->nazwaTurniejLineEdit->text().toStdString());
+        this->turniejTmp.setSponsor(ui->sponsorTurniejLineEdit->text().toStdString());
+        this->turniejTmp.setMiejsce(ui->miejsceTurniejLineEdit->text().toStdString());
+        this->turniejTmp.setPulaNagrod(ui->pulaNagrodTurniejLineEdit->text().toDouble());
+        this->turniejTmp.setNajwyzszyBrejkTurnieju(0);
+        this->turniejTmp.setId(this->kontenerTurniej.ustalNajwiekszyIdTurnieju() + 1);
+        this->turniejTmp.setLiczbaZawodnikow(ui->liczbaZawodnikowTurniejLineEdit->text().toInt());
+        if(this->walidujTurniej(this->turniejTmp)){
+            this->turniejTmp.losujDrabinkeTurnieju();
+            this->kontenerTurniej.dodajTurniej(this->turniejTmp);
+            this->turniejTmp = Turniej();
+            dodajTurniejeDoListy();
+        }
+    }
+}
+
+void Zalogowany::on_dodajZawodnikaListWidget_currentRowChanged(int currentRow)
+{
+    this->dodawanyZawodnikIndex = currentRow;
+}
+
+void Zalogowany::on_dodajZawodnikaPushButton_clicked()
+{
+    if(this->dodawanyZawodnikIndex != -1){
+        vector<int> zawodnicy = this->turniejTmp.getZawodnicy();
+        bool jest = false;
+        for(int i = 0; i < zawodnicy.size();i++){
+            if(zawodnicy[i] == this->dodawanyZawodnikIndex + 1){
+                jest = true;
+            }
+        }
+        if(!jest){
+            this->turniejTmp.dodajZawodnika(this->dodawanyZawodnikIndex + 1);
+            this->ui->zawodnicyTurniejListWidget->clear();
+            vector<int> zawodnicy = turniejTmp.getZawodnicy();
+            for(int i = 0; i < zawodnicy.size(); i++){
+                Zawodnik zaw = this->kontenerZawodnicy.getZawodnikId(zawodnicy[i]);
+                ui->zawodnicyTurniejListWidget->addItem(QString::fromStdString(zaw.getImie() + " " + zaw.getNazwisko()));
+            }
+        }
+    }
 }
