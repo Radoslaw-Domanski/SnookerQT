@@ -133,9 +133,11 @@ void KontenerTurniej::zapiszTurnieje()
             xml_node<> *idik = doc.allocate_node(node_element, "zawodnik",idPtr);
             zawodnicy->append_node(idik);
         }
+        //vector<Mecz> mecze = tur.getMecze();
+        this->zapiszMecze(i);
     }
 
-    std::ofstream myfile("turniejeTest.xml");
+    std::ofstream myfile("turnieje.xml");
     myfile << doc;
     myfile.close();
     doc.clear();
@@ -202,4 +204,154 @@ void KontenerTurniej::pobierzMecze(int idTurnieju)
         cout << mecz.getPartie().size();
         this->turnieje[idTurnieju - 1].dodajMecz(mecz);
     }
+}
+
+void KontenerTurniej::zapiszMecze(int indexTurnieju)
+{
+    Turniej tur = this->getTurniej(indexTurnieju);
+    int idTurnieju = tur.getId();
+    vector<Mecz> mecze = tur.getMecze();
+
+    xml_document<> doc;
+    xml_node<>* decl = doc.allocate_node(node_declaration);
+    decl->append_attribute(doc.allocate_attribute("version", "1.0"));
+    decl->append_attribute(doc.allocate_attribute("encoding", "UTF-8"));
+    doc.append_node(decl);
+
+    xml_node<> *files = doc.allocate_node(node_element, "mecze");
+    doc.append_node(files);
+
+    for(int i = 0;i < mecze.size();i++){
+        xml_node<> *mecz = doc.allocate_node(node_element, "mecz");
+        files->append_node(mecz);
+        Mecz m = tur.getMecz(i);
+
+        string id = to_string(m.getNr());
+        char * idPtr = new char[id.size() + 1];
+        copy(id.begin(), id.end(), idPtr);
+        idPtr[id.size()] = '\0';
+        xml_attribute<> *attr = doc.allocate_attribute("nr", idPtr);
+        mecz->append_attribute(attr);
+
+        string zawodnik1 = to_string(m.getZawodnik1());
+        char * zawodnik1Ptr = new char[zawodnik1.size() + 1];
+        copy(zawodnik1.begin(), zawodnik1.end(), zawodnik1Ptr);
+        zawodnik1Ptr[zawodnik1.size()] = '\0';
+        xml_node<> *zaw1 = doc.allocate_node(node_element, "zawodnik1",zawodnik1Ptr);
+        mecz->append_node(zaw1);
+
+        string zawodnik2 = to_string(m.getZawodnik2());
+        char * zawodnik2Ptr = new char[zawodnik2.size() + 1];
+        copy(zawodnik2.begin(), zawodnik2.end(), zawodnik2Ptr);
+        zawodnik2Ptr[zawodnik2.size()] = '\0';
+        xml_node<> *zaw2 = doc.allocate_node(node_element, "zawodnik2",zawodnik2Ptr);
+        mecz->append_node(zaw2);
+
+        string liczPartii = to_string(m.getLiczbaPartii());
+        char * liczPartiiPtr = new char[liczPartii.size() + 1];
+        copy(liczPartii.begin(), liczPartii.end(), liczPartiiPtr);
+        liczPartiiPtr[liczPartii.size()] = '\0';
+        xml_node<> *liczPartiiNode = doc.allocate_node(node_element, "liczbaPartii",liczPartiiPtr);
+        mecz->append_node(liczPartiiNode);
+
+        string wynik1 = to_string(m.getWynik1());
+        char * wynik1Ptr = new char[wynik1.size() + 1];
+        copy(wynik1.begin(), wynik1.end(), wynik1Ptr);
+        wynik1Ptr[wynik1.size()] = '\0';
+        xml_node<> *wynik1Node = doc.allocate_node(node_element, "wynik1",wynik1Ptr);
+        mecz->append_node(wynik1Node);
+
+        string wynik2 = to_string(m.getWynik2());
+        char * wynik2Ptr = new char[wynik2.size() + 1];
+        copy(wynik2.begin(), wynik2.end(), wynik2Ptr);
+        wynik2Ptr[wynik2.size()] = '\0';
+        xml_node<> *wynik2Node = doc.allocate_node(node_element, "wynik2",wynik2Ptr);
+        mecz->append_node(wynik2Node);
+
+        tm dataTm = m.getDataMeczu();
+        string dzien = to_string(dataTm.tm_mday);
+        string miesiac = to_string(dataTm.tm_mon + 1);
+        string rok = to_string(dataTm.tm_year + 1900);
+        if(dzien.length() < 2){
+            dzien = "0" + dzien;
+        }
+        if(miesiac.length() < 2){
+            miesiac = "0" + miesiac;
+        }
+        string dataStr = dzien + "-" + miesiac + "-" + rok;
+        char * dataPtr = new char[dataStr.size() + 1];
+        copy(dataStr.begin(), dataStr.end(), dataPtr);
+        dataPtr[dataStr.size()] = '\0';
+        xml_node<> *dataNode = doc.allocate_node(node_element, "dataMeczu",dataPtr);
+        mecz->append_node(dataNode);
+
+        xml_node<> *partie = doc.allocate_node(node_element, "partie");
+        mecz->append_node(partie);
+
+        vector<Partia> vPartie = m.getPartie();
+
+        for(int i = 0; i < vPartie.size();i++){
+            xml_node<> *partia = doc.allocate_node(node_element, "partia");
+            partie->append_node(partia);
+
+            string nr = to_string(vPartie[i].getNr());
+            char *nrPtr = new char[nr.size() + 1];
+            copy(nr.begin(), nr.end(), nrPtr);
+            nrPtr[nr.size()] = '\0';
+            xml_attribute<> *attr = doc.allocate_attribute("nr", nrPtr);
+            partia->append_attribute(attr);
+
+            string punkty1 = to_string(vPartie[i].getPunktyZawodnika1());
+            char * punkty1Ptr = new char[punkty1.size() + 1];
+            copy(punkty1.begin(), punkty1.end(), punkty1Ptr);
+            punkty1Ptr[punkty1.size()] = '\0';
+            xml_node<> *punkty1Node = doc.allocate_node(node_element, "punktyZawodnika1",punkty1Ptr);
+            partia->append_node(punkty1Node);
+
+            string punkty2 = to_string(vPartie[i].getPunktyZawodnika2());
+            char * punkty2Ptr = new char[punkty2.size() + 1];
+            copy(punkty2.begin(), punkty2.end(), punkty2Ptr);
+            punkty2Ptr[punkty2.size()] = '\0';
+            xml_node<> *punkty2Node = doc.allocate_node(node_element, "punktyZawodnika2",punkty2Ptr);
+            partia->append_node(punkty2Node);
+
+            string brejk = to_string(vPartie[i].getAktualnyBrejk());
+            char * brejkPtr = new char[brejk.size() + 1];
+            copy(brejk.begin(), brejk.end(), brejkPtr);
+            brejkPtr[brejk.size()] = '\0';
+            xml_node<> *brejkNode = doc.allocate_node(node_element, "aktualnyBrejk",brejkPtr);
+            partia->append_node(brejkNode);
+
+            string dostepnePunkty = to_string(vPartie[i].getDostepnePunkty());
+            char * dostepnePunktyPtr = new char[dostepnePunkty.size() + 1];
+            copy(dostepnePunkty.begin(), dostepnePunkty.end(), dostepnePunktyPtr);
+            dostepnePunktyPtr[dostepnePunkty.size()] = '\0';
+            xml_node<> *dostepnePunktyNode = doc.allocate_node(node_element, "dostepnePunkty",dostepnePunktyPtr);
+            partia->append_node(dostepnePunktyNode);
+
+            string dostepneBileCzerwone = to_string(vPartie[i].getDostepneBileCzerwone());
+            char * dostepneBileCzerwonePtr = new char[dostepneBileCzerwone.size() + 1];
+            copy(dostepneBileCzerwone.begin(), dostepneBileCzerwone.end(), dostepneBileCzerwonePtr);
+            dostepneBileCzerwonePtr[dostepneBileCzerwone.size()] = '\0';
+            xml_node<> *dostepneBileCzerwoneNode = doc.allocate_node(node_element, "dostepneBileCzerwone",dostepneBileCzerwonePtr);
+            partia->append_node(dostepneBileCzerwoneNode);
+
+            string aktualnyGracz = "0";
+            if(vPartie[i].getAktualnyZawodnik() == true){
+                aktualnyGracz = "1";
+            }
+            char * aktualnyGraczPtr = new char[aktualnyGracz.size() + 1];
+            copy(aktualnyGracz.begin(), aktualnyGracz.end(), aktualnyGraczPtr);
+            aktualnyGraczPtr[aktualnyGracz.size()] = '\0';
+            xml_node<> *aktualnyGraczNode = doc.allocate_node(node_element, "aktualnyGracz",aktualnyGraczPtr);
+            partia->append_node(aktualnyGraczNode);
+        }
+
+        string str = "mecze" + to_string(idTurnieju) + ".xml";
+        std::ofstream myfile(str);
+        myfile << doc;
+        myfile.close();
+        doc.clear();
+    }
+
 }

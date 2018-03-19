@@ -23,7 +23,7 @@ public:
     Turniej getTurniej(int index);
     int ustalNajwiekszyIdTurnieju();
     void pobierzMecze(int idTurnieju);
-    void zapiszMecze(int idTurnieju);
+    void zapiszMecze(int indexTurnieju);
     vector<Turniej> getTurnieje() const;
     void setTurnieje(const vector<Turniej> &value);
 };
