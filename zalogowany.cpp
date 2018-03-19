@@ -19,7 +19,7 @@ Zalogowany::Zalogowany(QWidget *parent) :
     ui->brejkiStupunktoweZawodnikLineEdit->setEnabled(false);
     ui->brejkiMaksymalneZawodnikLineEdit->setEnabled(false);
     ui->zarobkiZawodnikLineEdit->setEnabled(false);
-    ui->turniejFrame->setVisible(false);
+    //ui->turniejFrame->setVisible(false);
     ui->liczbaZawodnikowTurniejLineEdit->setEnabled(false);
     ui->najwyzszyBrejkTurniejLineEdit->setEnabled(false);
 }
@@ -38,6 +38,46 @@ void Zalogowany::setAdministratorIndex(int index){
 
 int Zalogowany::getAdministratorIndex(){
     return this->administratorIndex;
+}
+
+void Zalogowany::zaladujPartie()
+{
+    Mecz m = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex);
+    Zawodnik z1 = this->kontenerZawodnicy.getZawodnikId(m.getZawodnik1());
+    Zawodnik z2 = this->kontenerZawodnicy.getZawodnikId(m.getZawodnik2());
+    Partia partia = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(this->partiaIndex);
+    this->ui->zawodnik1Label->setText(QString::fromStdString(z1.getImie()));
+    this->ui->zawodnik11Label->setText(QString::fromStdString(z1.getNazwisko()));
+    this->ui->zawodnik2Label->setText(QString::fromStdString(z2.getImie()));
+    this->ui->zawodnik22Label->setText(QString::fromStdString(z2.getNazwisko()));
+    this->ui->partiaLabel->setText(QString::fromStdString(to_string(partia.getNr())));
+    this->ui->czerwoneLabel->setText(QString::fromStdString(to_string(partia.getDostepneBileCzerwone())));
+    this->ui->punktyLabel->setText(QString::fromStdString(to_string(partia.getDostepnePunkty())));
+    this->ui->punkty1Label->setText(QString::fromStdString(to_string(partia.getPunktyZawodnika1())));
+    this->ui->punkty2Label->setText(QString::fromStdString(to_string(partia.getPunktyZawodnika2())));
+    if(partia.getAktualnyZawodnik()){
+        this->ui->aktualny1Label->setText("X");
+        this->ui->aktualny2Label->setText("");
+    }
+    else{
+        this->ui->aktualny1Label->setText("");
+        this->ui->aktualny2Label->setText("X");
+    }
+}
+
+void Zalogowany::zaladujMecze()
+{
+    Mecz m = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex);
+    Zawodnik z1 = this->kontenerZawodnicy.getZawodnikId(m.getZawodnik1());
+    Zawodnik z2 = this->kontenerZawodnicy.getZawodnikId(m.getZawodnik2());
+
+    this->ui->meczZawodnik1Label->setText(QString::fromStdString(z1.getImie()));
+    this->ui->meczZawodnik11Label->setText(QString::fromStdString(z1.getNazwisko()));
+    this->ui->meczZawodnik2Label->setText(QString::fromStdString(z2.getImie()));
+    this->ui->meczZawodnik22Label->setText(QString::fromStdString(z2.getNazwisko()));
+    this->ui->meczPartieLabel->setText(QString::fromStdString("(" + to_string(m.getLiczbaPartii()) + ")"));
+    this->ui->meczWynik1Label->setText(QString::fromStdString(to_string(m.getWynik1())));
+    this->ui->meczWynik2Label->setText(QString::fromStdString(to_string(m.getWynik2())));
 }
 
 bool Zalogowany::walidujTurniej(Turniej turniej)
@@ -273,21 +313,23 @@ void Zalogowany::wyswietlTurniej()
 
 void Zalogowany::schowajTurniej()
 {
-    ui->turniejFrame->setVisible(false);
+    //ui->turniejFrame->setVisible(false);
 }
 
 void Zalogowany::on_turniejeListWidget_currentRowChanged(int currentRow)
 {
-    this->setMeczIndex(-1);
+    this->setTurniejIndex(currentRow);
+    this->setMeczIndex(0);
     this->setPartiaIndex(-1);
-    ui->meczeListWidget->clear();
-    ui->zawodnicyTurniejListWidget->clear();
     ui->partieListWidget->clear();
+    ui->zawodnicyTurniejListWidget->clear();
+    ui->meczeListWidget->clear();        
     this->dodajZawodnikowTurnieju(currentRow);
     this->dodajMeczeTurnieju(currentRow);
-    this->setTurniejIndex(currentRow);
     this->wyswietlTurniej();
-    ui->turniejFrame->setVisible(true);
+    if(this->turniejIndex != -1)
+        this->ui->TurniejStackedWidget->setCurrentIndex(0);
+    //ui->turniejFrame->setVisible(true);
     ui->dodajZawodnikaListWidget->setEnabled(false);
     ui->dodajZawodnikaPushButton->setEnabled(false);
     ui->liczbaZawodnikowTurniejLineEdit->setEnabled(false);
@@ -309,8 +351,13 @@ void Zalogowany::on_meczeListWidget_currentRowChanged(int currentRow)
 {
     this->setMeczIndex(currentRow);
     this->setPartiaIndex(-1);
-    this->dodajPartieMeczu(this->getTurniejIndex(),currentRow);
-    this->schowajTurniej();
+    this->ui->partieListWidget->clear();
+    if(currentRow != -1)
+    {
+        this->ui->TurniejStackedWidget->setCurrentIndex(1);
+        this->dodajPartieMeczu(this->getTurniejIndex(),currentRow);
+        this->zaladujMecze();
+    }
 }
 
 int Zalogowany::getPartiaIndex() const
@@ -337,11 +384,20 @@ void Zalogowany::on_partieListWidget_currentRowChanged(int currentRow)
 {
     this->setPartiaIndex(currentRow);
     this->schowajTurniej();
+    if(this->partiaIndex != -1){
+        this->ui->rozegrajPartiePushButton->setEnabled(true);
+        this->ui->TurniejStackedWidget->setCurrentIndex(2);
+        this->zaladujPartie();
+    }
+    else{
+        this->ui->rozegrajPartiePushButton->setEnabled(false);
+    }
 }
 
 
 void Zalogowany::on_dodajTurniejButton_clicked()
 {
+    this->ui->TurniejStackedWidget->setCurrentIndex(0);
     this->turniejTmp = Turniej();
     ui->nazwaTurniejLineEdit->setText("");
     ui->sponsorTurniejLineEdit->setText("");
@@ -349,7 +405,7 @@ void Zalogowany::on_dodajTurniejButton_clicked()
     ui->pulaNagrodTurniejLineEdit->setText("");
     ui->najwyzszyBrejkTurniejLineEdit->setText("");
     ui->liczbaZawodnikowTurniejLineEdit->setText("");
-    ui->turniejFrame->setVisible(true);
+    //ui->turniejFrame->setVisible(true);
     ui->liczbaZawodnikowTurniejLineEdit->setEnabled(true);
     ui->dodajZawodnikaListWidget->setEnabled(true);
     ui->dodajZawodnikaPushButton->setEnabled(true);
@@ -359,7 +415,7 @@ void Zalogowany::on_dodajTurniejButton_clicked()
     this->setTurniejIndex(-1);
     this->setMeczIndex(-1);
     //ui->meczeListWidget->clear();
-    ui->turniejFrame->show();
+    //ui->turniejFrame->show();
 
     this->ui->dodajZawodnikaListWidget->clear();
     vector<Zawodnik> zawodnicy = this->kontenerZawodnicy.getZawodnicy();
@@ -417,4 +473,16 @@ void Zalogowany::on_dodajZawodnikaPushButton_clicked()
             }
         }
     }
+}
+
+void Zalogowany::on_rozegrajPartiePushButton_clicked()
+{
+    if(this->partiaIndex != -1){
+       //this->ui->turniejPartiaFrame->setVisible(true);
+       //this->ui->turniejFrame->setVisible(false);
+       Partia partia = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(this->partiaIndex);
+       //this->ui->nrPartiaLabel->setText("Partia nr " + partia.getNr());
+    }
+
+
 }

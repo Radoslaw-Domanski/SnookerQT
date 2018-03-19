@@ -27,6 +27,8 @@ public:
     void schowajTurniej();
     void ustalZawodnikowWLiscie();
     int getAdministratorIndex();
+    void zaladujPartie();
+    void zaladujMecze();
     bool walidujTurniej(Turniej turniej);
     ~Zalogowany();
 
@@ -67,6 +69,8 @@ private slots:
     void on_dodajZawodnikaListWidget_currentRowChanged(int currentRow);
 
     void on_dodajZawodnikaPushButton_clicked();
+
+    void on_rozegrajPartiePushButton_clicked();
 
 private:
     Ui::Zalogowany *ui;

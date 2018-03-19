@@ -123,10 +123,30 @@ int Turniej::ustalNajwyzszyNrMeczu()
 void Turniej::losujDrabinkeTurnieju()
 {
     if(this->zawodnicy.size() == 2){
-        time_t current_time;
         struct tm  local_time;
 
         this->mecze.push_back(Mecz(this->zawodnicy[0],this->zawodnicy[1],local_time,5));
+        this->mecze[0].dodajPartie(Partia(0,0,0,147,15,true,false,1));
+    }
+    else if(this->zawodnicy.size() == 4){
+        struct tm  local_time;
+        time_t t = time(0);   // get time now
+        struct tm *now = localtime( & t );
+        local_time.tm_year = now->tm_year;
+        local_time.tm_mon = now->tm_mon;
+        local_time.tm_mday = now->tm_mday;
+        vector<int> zawodnicy = this->getZawodnicy();
+        int losowyIndex = rand() % zawodnicy.size();
+        int i = zawodnicy[losowyIndex];
+        zawodnicy.erase(zawodnicy.begin() + losowyIndex);
+        losowyIndex = rand() % zawodnicy.size();
+        int j = zawodnicy[losowyIndex];
+        zawodnicy.erase(zawodnicy.begin() + losowyIndex);
+
+        this->mecze.push_back(Mecz(i,j,local_time,5,0,0,1));
+        this->mecze.push_back(Mecz(zawodnicy[0],zawodnicy[1],local_time,5,0,0,2));
+        this->mecze[0].dodajPartie(Partia(0,0,0,147,15,true,false,1));
+        this->mecze[1].dodajPartie(Partia(0,0,0,147,15,true,false,1));
     }
 }
 

@@ -41,7 +41,6 @@ public:
     Mecz getMecz(int index);
     void dodajZawodnika(int id);
     int ustalNajwyzszyNrMeczu();
-
     void losujDrabinkeTurnieju();
 
     vector<int> getZawodnicy() const;

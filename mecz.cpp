@@ -37,6 +37,7 @@ Mecz::Mecz()
 
 Mecz::Mecz(int zawodnik1, int zawodnik2, tm dataMeczu, int liczbaPartii, int wynik1, int wynik2, int nr){
     this->partie = vector<Partia>();
+    //this->dodajPartie(Partia(0,0,0,147,15,true,false,1));
     this->setZawodnik1(zawodnik1);
     this->setZawodnik2(zawodnik2);
     this->setDataMeczu(dataMeczu);

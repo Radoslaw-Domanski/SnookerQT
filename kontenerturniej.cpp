@@ -187,7 +187,6 @@ void KontenerTurniej::pobierzMecze(int idTurnieju)
         //Zawodnik zaw1 = this->getZawodnikId(zawodnik1);
         //Zawodnik zaw2 = this->getZawodnikId(zawodnik2);
         Mecz mecz = Mecz(zawodnik1,zawodnik2,data,liczbaPartii,wynik1,wynik2,id);
-        cout << mecz.getPartie().size();
         xml_node<> *partie = mecz_node->first_node("partie");
         xml_node<> * partia = partie->first_node("partia");
         for (partia; partia; partia = partia->next_sibling())
@@ -201,7 +200,6 @@ void KontenerTurniej::pobierzMecze(int idTurnieju)
             int aktualnyGracz = atoi(partia->first_node("aktualnyGracz")->value());
             mecz.dodajPartie(Partia(punktyZawodnika1,punktyZawodnika2,aktualnyBrejk,dostepnePunkty,dostepneBileCzerwone,aktualnyGracz,true,nr));
         }
-        cout << mecz.getPartie().size();
         this->turnieje[idTurnieju - 1].dodajMecz(mecz);
     }
 }
@@ -347,11 +345,11 @@ void KontenerTurniej::zapiszMecze(int indexTurnieju)
             partia->append_node(aktualnyGraczNode);
         }
 
-        string str = "mecze" + to_string(idTurnieju) + ".xml";
-        std::ofstream myfile(str);
-        myfile << doc;
-        myfile.close();
-        doc.clear();
-    }
 
+    }
+    string str = "mecze" + to_string(idTurnieju) + ".xml";
+    std::ofstream myfile(str);
+    myfile << doc;
+    myfile.close();
+    doc.clear();
 }
