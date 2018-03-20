@@ -10,6 +10,16 @@ void Partia::setNr(int value)
     nr = value;
 }
 
+bool Partia::getTylkoKolory() const
+{
+    return tylkoKolory;
+}
+
+void Partia::setTylkoKolory(bool value)
+{
+    tylkoKolory = value;
+}
+
 Partia::Partia()
 {    
     this->setPunktyZawodnika1(0);
@@ -19,6 +29,7 @@ Partia::Partia()
     this->setDostepneBileCzerwone(15);
     this->setAktualnyZawodnik(true);
     this->setZakonczona(false);
+    this->setTylkoKolory(false);
 }
 
 Partia:: Partia(int punkty1, int punkty2, int aktualnyBrejk, int dostepnePunkty, int dostepneBileCzerwone, bool aktualnyZawodnik, bool zakonczona, int nr){
@@ -30,6 +41,12 @@ Partia:: Partia(int punkty1, int punkty2, int aktualnyBrejk, int dostepnePunkty,
     this->setAktualnyZawodnik(aktualnyZawodnik);
     this->setZakonczona(zakonczona);
     this->setNr(nr);
+    if(dostepneBileCzerwone > 0){
+        this->setTylkoKolory(false);
+    }
+    else{
+        this->setTylkoKolory(true);
+    }
 }
 
 Partia::~Partia(){
@@ -81,7 +98,7 @@ void Partia::wbijBileKolorowa(int punkty){
         this->setPunktyZawodnika2(this->getPunktyZawodnika2() + punkty);
     }
     this->setAktualnyBrejk(this->getAktualnyBrejk() + punkty);
-    if(this->getDostepneBileCzerwone() == 0 && this->getDostepnePunkty() <= 27){
+    if(this->getDostepneBileCzerwone() == 0 && this->getDostepnePunkty() <= 27 && this->getTylkoKolory()){
         this->setDostepnePunkty(this->getDostepnePunkty() - punkty);
     }
     if(this->getDostepnePunkty() == 0){

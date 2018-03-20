@@ -150,6 +150,11 @@ void Turniej::losujDrabinkeTurnieju()
     }
 }
 
+void Turniej::losujNastepnaRunde()
+{
+
+}
+
 int Turniej::getId() const
 {
     return id;
@@ -168,6 +173,30 @@ vector<int> Turniej::getZawodnicy() const
 void Turniej::setZawodnicy(const vector<int> &value)
 {
     zawodnicy = value;
+}
+
+void Turniej::aktualizujPartie(int indexMeczu, int indexPartii, Partia partia)
+{
+    Mecz mecz = this->getMecz(indexMeczu);
+    int ilosc = mecz.getPartie().size() + 1;
+    this->mecze[indexMeczu].setPartia(indexPartii,partia);
+    if(mecz.getWynik1() < ( mecz.getLiczbaPartii()/2  + 1 ) &&
+       mecz.getWynik2() < ( mecz.getLiczbaPartii()/2  + 1 )   ){
+        this->mecze[indexMeczu].dodajPartie(Partia(0,0,0,147,15,true,false,ilosc));
+    }
+    else{
+        this->mecze[indexMeczu].setZakonczony(true);
+    }
+}
+
+void Turniej::aktualizujWynikMeczu(int indexMeczu, Partia partia)
+{
+    if(partia.getPunktyZawodnika1() > partia.getPunktyZawodnika2()){
+        this->mecze[indexMeczu].setWynik1(this->mecze[indexMeczu].getWynik1() + 1);
+    }
+    else if(partia.getPunktyZawodnika2() > partia.getPunktyZawodnika1()){
+        this->mecze[indexMeczu].setWynik2(this->mecze[indexMeczu].getWynik2() + 1);
+    }
 }
 
 Turniej::Turniej()

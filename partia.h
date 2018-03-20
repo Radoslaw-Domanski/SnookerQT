@@ -13,6 +13,7 @@ private:
     bool aktualnyZawodnik; // jak true to zawodnik1 jak nie to zawodnik2
     bool zakonczona;
     int nr;
+    bool tylkoKolory;
 public:
     Partia();
     Partia(int punkty1, int punkty2, int aktualnyBrejk, int dostepnePunkty, int dostepneBileCzerwone, bool aktualnyZawodnik, bool zakonczona, int nr = 1 );
@@ -41,6 +42,8 @@ public:
     void edytujPartie(Partia partia);
     ~Partia();
 
+    bool getTylkoKolory() const;
+    void setTylkoKolory(bool value);
 };
 
 #endif // PARTIA_H

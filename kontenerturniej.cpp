@@ -10,6 +10,21 @@ void KontenerTurniej::setTurnieje(const vector<Turniej> &value)
     turnieje = value;
 }
 
+void KontenerTurniej::aktualizujPartie(int indexTurnieju, int indexMeczu, int indexPartii,Partia partia)
+{
+    this->turnieje[indexTurnieju].aktualizujPartie(indexMeczu,indexPartii,partia);
+}
+
+void KontenerTurniej::aktualizujWynikMeczu(int indexTurnieju, int indexMeczu, Partia partia)
+{
+    this->turnieje[indexTurnieju].aktualizujWynikMeczu(indexMeczu,partia);
+}
+
+void KontenerTurniej::dodajPartie(int indexTurnieju, int indexMeczu)
+{
+    //this->turnieje[indexTurnieju]
+}
+
 KontenerTurniej::KontenerTurniej()
 {
     this->turnieje = vector<Turniej>();

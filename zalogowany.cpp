@@ -80,6 +80,155 @@ void Zalogowany::zaladujMecze()
     this->ui->meczWynik2Label->setText(QString::fromStdString(to_string(m.getWynik2())));
 }
 
+void Zalogowany::aktualizujDanePartii()
+{
+    //Partia partia = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(this->partiaIndex);
+    this->ui->czerwoneLabel->setText(QString::fromStdString(to_string(this->wybranaPartia.getDostepneBileCzerwone())));
+    this->ui->punktyLabel->setText(QString::fromStdString(to_string(this->wybranaPartia.getDostepnePunkty())));
+    this->ui->punkty1Label->setText(QString::fromStdString(to_string(this->wybranaPartia.getPunktyZawodnika1())));
+    this->ui->punkty2Label->setText(QString::fromStdString(to_string(this->wybranaPartia.getPunktyZawodnika2())));
+    this->ui->aktualnyBrejkLiczbaLabel->setText(QString::fromStdString(to_string(this->wybranaPartia.getAktualnyBrejk())));
+    if(this->wybranaPartia.getAktualnyZawodnik()){
+        this->ui->aktualny1Label->setText("X");
+        this->ui->aktualny2Label->setText("");
+    }
+    else{
+        this->ui->aktualny1Label->setText("");
+        this->ui->aktualny2Label->setText("X");
+    }
+}
+
+void Zalogowany::odblokujZawodnika(bool pierwszy)
+{
+    this->zablokujZawodnika(!pierwszy);
+    this->zablokujZawodnika(pierwszy);
+    if(pierwszy){
+        if(this->wybranaPartia.getDostepneBileCzerwone() > 0){
+            this->ui->wbijCzerwona1PushButton->setEnabled(true);
+        }
+        else if(this->wybranaPartia.getDostepnePunkty() == 27 && !this->wybranaPartia.getTylkoKolory()){
+            this->wybranaPartia.setTylkoKolory(true);
+            this->ustawPozostaleKolory(pierwszy);
+        }
+        else if(this->wybranaPartia.getTylkoKolory()){
+            this->ustawPozostaleKolory(pierwszy);
+        }
+
+        if(this->wybranaPartia.getDostepnePunkty() >= 7){
+           this->ui->faul7PushButton->setEnabled(true);
+            if(this->wybranaPartia.getDostepnePunkty() >= 13){
+                this->ui->faul6PushButton->setEnabled(true);
+                if(this->wybranaPartia.getDostepnePunkty() >= 18){
+                    this->ui->faul5PushButton->setEnabled(true);
+                    if(this->wybranaPartia.getDostepnePunkty() >= 22){
+                       this->ui->faul4PushButton->setEnabled(true);
+                    }
+                    else{
+                       this->ui->faul4PushButton->setEnabled(false);
+                    }
+                }
+                else{
+                    this->ui->faul5PushButton->setEnabled(false);
+                }
+            }
+            else{
+               this->ui->faul6PushButton->setEnabled(false);
+            }
+        }
+        else{
+            this->ui->faul7PushButton->setEnabled(false);
+        }
+    }
+    else{
+        if(this->wybranaPartia.getDostepneBileCzerwone() > 0){
+            this->ui->wbijCzerwona1PushButton2->setEnabled(true);
+        }
+        else if(this->wybranaPartia.getDostepnePunkty() == 27 && !this->wybranaPartia.getTylkoKolory()){
+            this->wybranaPartia.setTylkoKolory(true);
+            this->ustawPozostaleKolory(pierwszy);
+        }
+        else if(this->wybranaPartia.getTylkoKolory()){
+            this->ustawPozostaleKolory(pierwszy);
+        }
+        if(this->wybranaPartia.getDostepnePunkty() >= 7){
+           this->ui->faul7PushButton2->setEnabled(true);
+            if(this->wybranaPartia.getDostepnePunkty() >= 13){
+                this->ui->faul6PushButton2->setEnabled(true);
+                if(this->wybranaPartia.getDostepnePunkty() >= 18){
+                    this->ui->faul5PushButton2->setEnabled(true);
+                    if(this->wybranaPartia.getDostepnePunkty() >= 22){
+                       this->ui->faul4PushButton2->setEnabled(true);
+                    }
+                    else{
+                       this->ui->faul4PushButton2->setEnabled(false);
+                    }
+                }
+                else{
+                    this->ui->faul5PushButton2->setEnabled(false);
+                }
+            }
+            else{
+               this->ui->faul6PushButton2->setEnabled(false);
+            }
+        }
+        else{
+            this->ui->faul7PushButton2->setEnabled(false);
+        }
+    }
+}
+
+void Zalogowany::odblokujKolory(bool pierwszy)
+{
+    if(pierwszy){
+        this->ui->wbijCzerwona1PushButton->setEnabled(false);
+        this->ui->wbijKolorowa2PushButton->setEnabled(true);
+        this->ui->wbijKolorowa3PushButton->setEnabled(true);
+        this->ui->wbijKolorowa4PushButton->setEnabled(true);
+        this->ui->wbijKolorowa5PushButton->setEnabled(true);
+        this->ui->wbijKolorowa6PushButton->setEnabled(true);
+        this->ui->wbijKolorowa7PushButton->setEnabled(true);
+    }
+    else{
+        this->ui->wbijCzerwona1PushButton2->setEnabled(false);
+        this->ui->wbijKolorowa2PushButton2->setEnabled(true);
+        this->ui->wbijKolorowa3PushButton2->setEnabled(true);
+        this->ui->wbijKolorowa4PushButton2->setEnabled(true);
+        this->ui->wbijKolorowa5PushButton2->setEnabled(true);
+        this->ui->wbijKolorowa6PushButton2->setEnabled(true);
+        this->ui->wbijKolorowa7PushButton2->setEnabled(true);
+    }
+}
+
+void Zalogowany::zablokujZawodnika(bool pierwszy)
+{
+    if(pierwszy){
+        this->ui->wbijCzerwona1PushButton->setEnabled(false);
+        this->ui->wbijKolorowa2PushButton->setEnabled(false);
+        this->ui->wbijKolorowa3PushButton->setEnabled(false);
+        this->ui->wbijKolorowa4PushButton->setEnabled(false);
+        this->ui->wbijKolorowa5PushButton->setEnabled(false);
+        this->ui->wbijKolorowa6PushButton->setEnabled(false);
+        this->ui->wbijKolorowa7PushButton->setEnabled(false);
+        this->ui->faul4PushButton->setEnabled(false);
+        this->ui->faul5PushButton->setEnabled(false);
+        this->ui->faul6PushButton->setEnabled(false);
+        this->ui->faul7PushButton->setEnabled(false);
+    }
+    else{
+        this->ui->wbijCzerwona1PushButton2->setEnabled(false);
+        this->ui->wbijKolorowa2PushButton2->setEnabled(false);
+        this->ui->wbijKolorowa3PushButton2->setEnabled(false);
+        this->ui->wbijKolorowa4PushButton2->setEnabled(false);
+        this->ui->wbijKolorowa5PushButton2->setEnabled(false);
+        this->ui->wbijKolorowa6PushButton2->setEnabled(false);
+        this->ui->wbijKolorowa7PushButton2->setEnabled(false);
+        this->ui->faul4PushButton2->setEnabled(false);
+        this->ui->faul5PushButton2->setEnabled(false);
+        this->ui->faul6PushButton2->setEnabled(false);
+        this->ui->faul7PushButton2->setEnabled(false);
+    }
+}
+
 bool Zalogowany::walidujTurniej(Turniej turniej)
 {
     if(turniej.getNazwa().length() < 3){
@@ -92,6 +241,79 @@ bool Zalogowany::walidujTurniej(Turniej turniej)
         return false;
     }
     return true;
+}
+
+void Zalogowany::ustawPozostaleKolory(bool pierwszy)
+{
+    int punkty = this->wybranaPartia.getDostepnePunkty();
+    if(pierwszy){
+        switch(punkty){
+        case 27:
+            this->ui->wbijKolorowa2PushButton->setEnabled(true);
+            break;
+        case 25:
+            this->ui->wbijKolorowa3PushButton->setEnabled(true);
+            break;
+        case 22:
+            this->ui->wbijKolorowa4PushButton->setEnabled(true);
+            break;
+        case 18:
+            this->ui->wbijKolorowa5PushButton->setEnabled(true);
+            break;
+        case 13:
+            this->ui->wbijKolorowa6PushButton->setEnabled(true);
+            break;
+        case 7:
+            this->ui->wbijKolorowa7PushButton->setEnabled(true);
+            break;
+        case 0:
+            this->zakonczPartie();
+            break;
+        default:
+            break;
+        }
+    }
+    else{
+        switch(punkty){
+        case 27:
+            this->ui->wbijKolorowa2PushButton2->setEnabled(true);
+            break;
+        case 25:
+            this->ui->wbijKolorowa3PushButton2->setEnabled(true);
+            break;
+        case 22:
+            this->ui->wbijKolorowa4PushButton2->setEnabled(true);
+            break;
+        case 18:
+            this->ui->wbijKolorowa5PushButton2->setEnabled(true);
+            break;
+        case 13:
+            this->ui->wbijKolorowa6PushButton2->setEnabled(true);
+            break;
+        case 7:
+            this->ui->wbijKolorowa7PushButton2->setEnabled(true);
+            break;
+        case 0:
+            this->zakonczPartie();
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void Zalogowany::zakonczPartie()
+{
+    this->kontenerTurniej.aktualizujWynikMeczu(this->turniejIndex,this->meczIndex,this->wybranaPartia);
+    this->kontenerTurniej.aktualizujPartie(this->turniejIndex,this->meczIndex,this->partiaIndex,this->wybranaPartia);
+    this->ui->partiaFrame->setVisible(false);
+    int index = this->meczIndex;
+    this->ui->meczeListWidget->clear();
+    this->dodajMeczeTurnieju(this->turniejIndex);
+    this->ui->meczeListWidget->setCurrentRow(index);
+    this->ui->partieListWidget->clear();
+    this->meczIndex = index;
+    this->dodajPartieMeczu(this->turniejIndex,this->meczIndex);
 }
 
 void Zalogowany::dodajAdministratorowDoListy(){
@@ -357,6 +579,13 @@ void Zalogowany::on_meczeListWidget_currentRowChanged(int currentRow)
         this->ui->TurniejStackedWidget->setCurrentIndex(1);
         this->dodajPartieMeczu(this->getTurniejIndex(),currentRow);
         this->zaladujMecze();
+        Mecz m = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex);
+        if( ( m.getPartie().size() < m.getLiczbaPartii() ) && ( m.getWynik1() < ( ceil(m.getLiczbaPartii()/2) + 1 )) && ( m.getWynik2() < (ceil(m.getLiczbaPartii()/2)+ 1 ))){
+            this->ui->dodajPartiePushButton->setEnabled(true);
+        }
+        else{
+           this->ui->dodajPartiePushButton->setEnabled(false);
+        }
     }
 }
 
@@ -385,9 +614,16 @@ void Zalogowany::on_partieListWidget_currentRowChanged(int currentRow)
     this->setPartiaIndex(currentRow);
     this->schowajTurniej();
     if(this->partiaIndex != -1){
-        this->ui->rozegrajPartiePushButton->setEnabled(true);
         this->ui->TurniejStackedWidget->setCurrentIndex(2);
         this->zaladujPartie();
+        Partia p = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(currentRow);
+        this->ui->partiaFrame->setVisible(false);
+        if(p.getPunktyZawodnika1() == 0 && p.getPunktyZawodnika2() == 0){
+            this->ui->rozegrajPartiePushButton->setEnabled(true);
+        }
+        else{
+            this->ui->rozegrajPartiePushButton->setEnabled(false);
+        }
     }
     else{
         this->ui->rozegrajPartiePushButton->setEnabled(false);
@@ -478,11 +714,186 @@ void Zalogowany::on_dodajZawodnikaPushButton_clicked()
 void Zalogowany::on_rozegrajPartiePushButton_clicked()
 {
     if(this->partiaIndex != -1){
-       //this->ui->turniejPartiaFrame->setVisible(true);
-       //this->ui->turniejFrame->setVisible(false);
-       Partia partia = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(this->partiaIndex);
-       //this->ui->nrPartiaLabel->setText("Partia nr " + partia.getNr());
+       //Partia partia = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(this->partiaIndex);
+       this->wybranaPartia = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(this->partiaIndex);
+       if(this->wybranaPartia.getPunktyZawodnika1() == 0 && this->wybranaPartia.getPunktyZawodnika2() == 0){
+           this->ui->partiaFrame->setVisible(true);
+           this->odblokujZawodnika(true);
+       }
+       else{
+           this->ui->partiaFrame->setVisible(false);
+       }
     }
+}
 
+void Zalogowany::on_dodajPartiePushButton_clicked()
+{
 
+}
+
+void Zalogowany::on_wbijCzerwona1PushButton_clicked()
+{
+    this->wybranaPartia.wbijBileCzerwona();
+    this->odblokujKolory(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa2PushButton_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(2);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa3PushButton_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(3);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa4PushButton_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(4);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa5PushButton_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(5);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa6PushButton_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(6);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa7PushButton_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(7);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_zakonczBrejkaPushButton_clicked()
+{
+    this->wybranaPartia.setAktualnyBrejk(0);
+    this->wybranaPartia.setAktualnyZawodnik(!this->wybranaPartia.getAktualnyZawodnik());
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijCzerwona1PushButton2_clicked()
+{
+    this->wybranaPartia.wbijBileCzerwona();
+    this->odblokujKolory(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_faul4PushButton_clicked()
+{
+    this->wybranaPartia.faul(4);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_faul5PushButton_clicked()
+{
+    this->wybranaPartia.faul(5);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_faul6PushButton_clicked()
+{
+    this->wybranaPartia.faul(6);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_faul7PushButton_clicked()
+{
+    this->wybranaPartia.faul(7);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa2PushButton2_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(2);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa3PushButton2_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(3);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa4PushButton2_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(4);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa5PushButton2_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(5);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa6PushButton2_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(6);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_wbijKolorowa7PushButton2_clicked()
+{
+    this->wybranaPartia.wbijBileKolorowa(7);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_faul4PushButton2_clicked()
+{
+    this->wybranaPartia.faul(4);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_faul5PushButton2_clicked()
+{
+    this->wybranaPartia.faul(5);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_faul6PushButton2_clicked()
+{
+    this->wybranaPartia.faul(6);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_faul7PushButton2_clicked()
+{
+    this->wybranaPartia.faul(7);
+    this->odblokujZawodnika(this->wybranaPartia.getAktualnyZawodnik());
+    this->aktualizujDanePartii();
+}
+
+void Zalogowany::on_zakonczPartiePushButton_clicked()
+{
+    this->zakonczPartie();
 }

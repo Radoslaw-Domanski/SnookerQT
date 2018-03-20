@@ -42,9 +42,11 @@ public:
     void dodajZawodnika(int id);
     int ustalNajwyzszyNrMeczu();
     void losujDrabinkeTurnieju();
-
+    void losujNastepnaRunde();
     vector<int> getZawodnicy() const;
     void setZawodnicy(const vector<int> &value);
+    void aktualizujPartie(int indexMeczu, int indexPartii,Partia partia);
+    void aktualizujWynikMeczu(int indexMeczu,Partia partia);
 };
 
 #endif // TURNIEJ_H

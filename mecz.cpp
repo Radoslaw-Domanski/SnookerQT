@@ -30,6 +30,16 @@ void Mecz::setZawodnik2(int value)
     zawodnik2 = value;
 }
 
+bool Mecz::getZakonczony() const
+{
+    return zakonczony;
+}
+
+void Mecz::setZakonczony(bool value)
+{
+    zakonczony = value;
+}
+
 Mecz::Mecz()
 {
     this->partie = vector<Partia>();

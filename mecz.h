@@ -47,6 +47,8 @@ public:
     void setZawodnik1(int value);
     int getZawodnik2() const;
     void setZawodnik2(int value);
+    bool getZakonczony() const;
+    void setZakonczony(bool value);
 };
 
 #endif // MECZ_H

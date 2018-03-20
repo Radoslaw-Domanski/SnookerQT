@@ -29,7 +29,13 @@ public:
     int getAdministratorIndex();
     void zaladujPartie();
     void zaladujMecze();
+    void aktualizujDanePartii();
+    void odblokujZawodnika(bool pierwszy);
+    void odblokujKolory(bool pierwszy);
+    void zablokujZawodnika(bool pierwszy);
     bool walidujTurniej(Turniej turniej);
+    void ustawPozostaleKolory(bool pierwszy);
+    void zakonczPartie();
     ~Zalogowany();
 
     int getZawodnikIndex() const;
@@ -72,6 +78,56 @@ private slots:
 
     void on_rozegrajPartiePushButton_clicked();
 
+    void on_dodajPartiePushButton_clicked();
+
+    void on_wbijCzerwona1PushButton_clicked();
+
+    void on_wbijKolorowa2PushButton_clicked();
+
+    void on_wbijKolorowa3PushButton_clicked();
+
+    void on_wbijKolorowa4PushButton_clicked();
+
+    void on_wbijKolorowa5PushButton_clicked();
+
+    void on_wbijKolorowa6PushButton_clicked();
+
+    void on_wbijKolorowa7PushButton_clicked();
+
+    void on_zakonczBrejkaPushButton_clicked();
+
+    void on_wbijCzerwona1PushButton2_clicked();
+
+    void on_faul4PushButton_clicked();
+
+    void on_faul5PushButton_clicked();
+
+    void on_faul6PushButton_clicked();
+
+    void on_faul7PushButton_clicked();
+
+    void on_wbijKolorowa2PushButton2_clicked();
+
+    void on_wbijKolorowa3PushButton2_clicked();
+
+    void on_wbijKolorowa4PushButton2_clicked();
+
+    void on_wbijKolorowa5PushButton2_clicked();
+
+    void on_wbijKolorowa6PushButton2_clicked();
+
+    void on_wbijKolorowa7PushButton2_clicked();
+
+    void on_faul4PushButton2_clicked();
+
+    void on_faul5PushButton2_clicked();
+
+    void on_faul6PushButton2_clicked();
+
+    void on_faul7PushButton2_clicked();
+
+    void on_zakonczPartiePushButton_clicked();
+
 private:
     Ui::Zalogowany *ui;
     KontenerAdministrator kontenerAdministratorzy;
@@ -84,6 +140,7 @@ private:
     int meczIndex;
     int partiaIndex;
     int dodawanyZawodnikIndex;
+    Partia wybranaPartia;
 };
 
 #endif // ZALOGOWANY_H
