@@ -47,6 +47,8 @@ public:
     void setZawodnicy(const vector<int> &value);
     void aktualizujPartie(int indexMeczu, int indexPartii,Partia partia);
     void aktualizujWynikMeczu(int indexMeczu,Partia partia);
+    bool sprawdzNastepnaRunde();
+    void dodajPartie(int indexMeczu);
 };
 
 #endif // TURNIEJ_H

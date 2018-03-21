@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>596</width>
-    <height>533</height>
+    <width>618</width>
+    <height>554</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>618</width>
+    <height>554</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>618</width>
+    <height>554</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Snooker</string>
@@ -20,7 +32,7 @@
       <x>0</x>
       <y>0</y>
       <width>591</width>
-      <height>521</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -606,7 +618,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="turniej">
        <widget class="QLineEdit" name="sponsorTurniejLineEdit">
@@ -1602,8 +1614,12 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </widget>
       </widget>
+      <widget class="QWidget" name="page"/>
      </widget>
      <widget class="QPushButton" name="dodajPartiePushButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>370</x>
@@ -1614,6 +1630,22 @@ color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
        <string>Dodaj Partię</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="nastepnaRundaPushButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>230</y>
+        <width>171</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Nastepna Runda</string>
       </property>
      </widget>
     </widget>

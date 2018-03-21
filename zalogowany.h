@@ -128,6 +128,8 @@ private slots:
 
     void on_zakonczPartiePushButton_clicked();
 
+    void on_nastepnaRundaPushButton_clicked();
+
 private:
     Ui::Zalogowany *ui;
     KontenerAdministrator kontenerAdministratorzy;

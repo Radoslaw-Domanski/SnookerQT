@@ -506,6 +506,12 @@ void Zalogowany::dodajMeczeTurnieju(int indexTurnieju)
         QString qStr = QString::fromStdString(zaw1.getNazwisko() + " " + w1 + ":" + w2 + " " + zaw2.getNazwisko());
         ui->meczeListWidget->addItem(qStr);
     }
+    if(turniej.sprawdzNastepnaRunde()){
+        this->ui->nastepnaRundaPushButton->setEnabled(true);
+    }
+    else{
+        this->ui->nastepnaRundaPushButton->setEnabled(false);
+    }
 }
 
 void Zalogowany::dodajPartieMeczu(int indexTurnieju, int indexMeczu)
@@ -580,8 +586,17 @@ void Zalogowany::on_meczeListWidget_currentRowChanged(int currentRow)
         this->dodajPartieMeczu(this->getTurniejIndex(),currentRow);
         this->zaladujMecze();
         Mecz m = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex);
-        if( ( m.getPartie().size() < m.getLiczbaPartii() ) && ( m.getWynik1() < ( ceil(m.getLiczbaPartii()/2) + 1 )) && ( m.getWynik2() < (ceil(m.getLiczbaPartii()/2)+ 1 ))){
-            this->ui->dodajPartiePushButton->setEnabled(true);
+        vector<Partia> partie = m.getPartie();
+        if( ( m.getPartie().size() < m.getLiczbaPartii() ) && ( m.getWynik1() < ( ceil(m.getLiczbaPartii()/2) + 1 )) && ( m.getWynik2() < (ceil(m.getLiczbaPartii()/2)+ 1 )) ){
+            if(partie.size() == 0){
+                this->ui->dodajPartiePushButton->setEnabled(true);
+            }
+            else if(!(partie[partie.size() - 1].getPunktyZawodnika1() == 0 && partie[partie.size() - 1].getPunktyZawodnika2() == 0)){
+                this->ui->dodajPartiePushButton->setEnabled(true);
+            }
+            else{
+               this->ui->dodajPartiePushButton->setEnabled(false);
+            }
         }
         else{
            this->ui->dodajPartiePushButton->setEnabled(false);
@@ -620,6 +635,7 @@ void Zalogowany::on_partieListWidget_currentRowChanged(int currentRow)
         this->ui->partiaFrame->setVisible(false);
         if(p.getPunktyZawodnika1() == 0 && p.getPunktyZawodnika2() == 0){
             this->ui->rozegrajPartiePushButton->setEnabled(true);
+            this->ui->dodajPartiePushButton->setEnabled(false);
         }
         else{
             this->ui->rozegrajPartiePushButton->setEnabled(false);
@@ -714,7 +730,6 @@ void Zalogowany::on_dodajZawodnikaPushButton_clicked()
 void Zalogowany::on_rozegrajPartiePushButton_clicked()
 {
     if(this->partiaIndex != -1){
-       //Partia partia = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(this->partiaIndex);
        this->wybranaPartia = this->kontenerTurniej.getTurniej(this->turniejIndex).getMecz(this->meczIndex).getPartia(this->partiaIndex);
        if(this->wybranaPartia.getPunktyZawodnika1() == 0 && this->wybranaPartia.getPunktyZawodnika2() == 0){
            this->ui->partiaFrame->setVisible(true);
@@ -728,7 +743,9 @@ void Zalogowany::on_rozegrajPartiePushButton_clicked()
 
 void Zalogowany::on_dodajPartiePushButton_clicked()
 {
-
+    this->kontenerTurniej.dodajPartie(this->turniejIndex,this->meczIndex);
+    this->ui->partieListWidget->clear();
+    this->dodajPartieMeczu(this->turniejIndex,this->meczIndex);
 }
 
 void Zalogowany::on_wbijCzerwona1PushButton_clicked()
@@ -896,4 +913,11 @@ void Zalogowany::on_faul7PushButton2_clicked()
 void Zalogowany::on_zakonczPartiePushButton_clicked()
 {
     this->zakonczPartie();
+}
+
+void Zalogowany::on_nastepnaRundaPushButton_clicked()
+{
+    this->kontenerTurniej.losujNastepnaRunde(this->turniejIndex);
+    this->ui->meczeListWidget->clear();
+    this->dodajMeczeTurnieju(this->turniejIndex);
 }

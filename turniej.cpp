@@ -152,7 +152,84 @@ void Turniej::losujDrabinkeTurnieju()
 
 void Turniej::losujNastepnaRunde()
 {
+    //vector<int> zawodnicy = this->getZawodnicy();
+    struct tm  local_time;
+    time_t t = time(0);   // get time now
+    struct tm *now = localtime( & t );
+    local_time.tm_year = now->tm_year;
+    local_time.tm_mon = now->tm_mon;
+    local_time.tm_mday = now->tm_mday;
+    vector<int> nowi = vector<int>();
+    // 1 runda
+    if(this->getLiczbaZawodnikow() == 16){
+        int i = -1;
+        if(mecze.size() == 8){
+            i=0;
+        }
+        else if(mecze.size() == 12){
+            i=8;
+        }
+        else if(mecze.size() == 14){
+            i=12;
+        }
 
+        if( i != -1){
+            for(i; i < mecze.size();i++){
+                if(this->mecze[i].getWynik1() > this->mecze[i].getWynik2()){
+                    nowi.push_back(this->mecze[i].getZawodnik1());
+                }
+                else if(this->mecze[i].getWynik1() < this->mecze[i].getWynik2()){
+                    nowi.push_back(this->mecze[i].getZawodnik2());
+                }
+            }
+            for(int j = 0 ; j < nowi.size();j=j+2){
+               this->dodajMecz(Mecz(nowi[j],nowi[j+1],local_time,5,0,0,this->getMecze().size()+1));
+            }
+        }
+    }
+    else if(this->getLiczbaZawodnikow() == 8){
+        int i = -1;
+        if(mecze.size() == 4){
+            i=0;
+        }
+        else if(mecze.size() == 6){
+            i=4;
+        }
+
+        if( i != -1){
+            for(i; i < mecze.size();i++){
+                if(this->mecze[i].getWynik1() > this->mecze[i].getWynik2()){
+                    nowi.push_back(this->mecze[i].getZawodnik1());
+                }
+                else if(this->mecze[i].getWynik1() < this->mecze[i].getWynik2()){
+                    nowi.push_back(this->mecze[i].getZawodnik2());
+                }
+            }
+            for(int j = 0 ; j < nowi.size();j=j+2){
+               this->dodajMecz(Mecz(nowi[j],nowi[j+1],local_time,5,0,0,this->getMecze().size()+1));
+            }
+        }
+    }
+    else if(this->getLiczbaZawodnikow() == 4){
+        int i = -1;
+        if(mecze.size() == 2){
+            i=0;
+        }
+
+        if( i != -1){
+            for(i; i < mecze.size();i++){
+                if(this->mecze[i].getWynik1() > this->mecze[i].getWynik2()){
+                    nowi.push_back(this->mecze[i].getZawodnik1());
+                }
+                else if(this->mecze[i].getWynik1() < this->mecze[i].getWynik2()){
+                    nowi.push_back(this->mecze[i].getZawodnik2());
+                }
+            }
+            for(int j = 0 ; j < nowi.size();j=j+2){
+               this->dodajMecz(Mecz(nowi[j],nowi[j+1],local_time,5,0,0,this->getMecze().size()+1));
+            }
+        }
+    }
 }
 
 int Turniej::getId() const
@@ -197,6 +274,22 @@ void Turniej::aktualizujWynikMeczu(int indexMeczu, Partia partia)
     else if(partia.getPunktyZawodnika2() > partia.getPunktyZawodnika1()){
         this->mecze[indexMeczu].setWynik2(this->mecze[indexMeczu].getWynik2() + 1);
     }
+}
+
+bool Turniej::sprawdzNastepnaRunde()
+{
+    for(int i = 0; i < this->getMecze().size();i++){
+        if(this->mecze[i].getWynik1() < ( this->mecze[i].getLiczbaPartii()/2  + 1 ) &&
+           this->mecze[i].getWynik2() < ( this->mecze[i].getLiczbaPartii()/2  + 1 )   ){
+            return false;
+        }
+    }
+    return true;
+}
+
+void Turniej::dodajPartie(int indexMeczu)
+{
+    this->mecze[indexMeczu].dodajPartie(Partia(0,0,0,147,15,true,false,this->mecze[indexMeczu].getPartie().size()+ 1));
 }
 
 Turniej::Turniej()

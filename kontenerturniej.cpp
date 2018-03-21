@@ -22,7 +22,12 @@ void KontenerTurniej::aktualizujWynikMeczu(int indexTurnieju, int indexMeczu, Pa
 
 void KontenerTurniej::dodajPartie(int indexTurnieju, int indexMeczu)
 {
-    //this->turnieje[indexTurnieju]
+    this->turnieje[indexTurnieju].dodajPartie(indexMeczu);
+}
+
+void KontenerTurniej::losujNastepnaRunde(int indexTurnieju)
+{
+    this->turnieje[indexTurnieju].losujNastepnaRunde();
 }
 
 KontenerTurniej::KontenerTurniej()
