@@ -240,6 +240,9 @@ bool Zalogowany::walidujTurniej(Turniej turniej)
     if(turniej.getZawodnicy().size() != turniej.getLiczbaZawodnikow()){
         return false;
     }
+    if(turniej.getLiczbaZawodnikow() != 2 || turniej.getLiczbaZawodnikow() != 4 || turniej.getLiczbaZawodnikow() != 8 || turniej.getLiczbaZawodnikow() != 16){
+        return false;
+    }
     return true;
 }
 
@@ -314,6 +317,7 @@ void Zalogowany::zakonczPartie()
     this->ui->partieListWidget->clear();
     this->meczIndex = index;
     this->dodajPartieMeczu(this->turniejIndex,this->meczIndex);
+    this->kontenerTurniej.ustalNajwiekszyBrejkTurnieju(this->turniejIndex);
 }
 
 void Zalogowany::dodajAdministratorowDoListy(){
@@ -506,11 +510,19 @@ void Zalogowany::dodajMeczeTurnieju(int indexTurnieju)
         QString qStr = QString::fromStdString(zaw1.getNazwisko() + " " + w1 + ":" + w2 + " " + zaw2.getNazwisko());
         ui->meczeListWidget->addItem(qStr);
     }
+
     if(turniej.sprawdzNastepnaRunde()){
         this->ui->nastepnaRundaPushButton->setEnabled(true);
     }
     else{
         this->ui->nastepnaRundaPushButton->setEnabled(false);
+    }
+    if(turniej.getMecze().size() % 2 != 0){
+        this->ui->nastepnaRundaPushButton->setText("Turniej Zakończony");
+        this->ui->nastepnaRundaPushButton->setEnabled(false);
+    }
+    else{
+        this->ui->nastepnaRundaPushButton->setText("Nastepna Runda");
     }
 }
 
@@ -562,6 +574,7 @@ void Zalogowany::on_turniejeListWidget_currentRowChanged(int currentRow)
     ui->dodajZawodnikaPushButton->setEnabled(false);
     ui->liczbaZawodnikowTurniejLineEdit->setEnabled(false);
     ui->najwyzszyBrejkTurniejLineEdit->setEnabled(false);
+    ui->pulaNagrodTurniejLineEdit->setEnabled(false);
     ui->edytujTurniejButton->setText("Edytuj");
 }
 
@@ -656,6 +669,7 @@ void Zalogowany::on_dodajTurniejButton_clicked()
     ui->miejsceTurniejLineEdit->setText("");
     ui->pulaNagrodTurniejLineEdit->setText("");
     ui->najwyzszyBrejkTurniejLineEdit->setText("");
+    ui->pulaNagrodTurniejLineEdit->setEnabled(true);
     ui->liczbaZawodnikowTurniejLineEdit->setText("");
     //ui->turniejFrame->setVisible(true);
     ui->liczbaZawodnikowTurniejLineEdit->setEnabled(true);
@@ -917,7 +931,12 @@ void Zalogowany::on_zakonczPartiePushButton_clicked()
 
 void Zalogowany::on_nastepnaRundaPushButton_clicked()
 {
-    this->kontenerTurniej.losujNastepnaRunde(this->turniejIndex);
-    this->ui->meczeListWidget->clear();
-    this->dodajMeczeTurnieju(this->turniejIndex);
+    if(this->ui->nastepnaRundaPushButton->text() == "Nastepna Runda"){
+        this->kontenerTurniej.losujNastepnaRunde(this->turniejIndex);
+        this->ui->meczeListWidget->clear();
+        this->dodajMeczeTurnieju(this->turniejIndex);
+    }
+    else{
+        this->kontenerTurniej.losujNastepnaRunde(this->turniejIndex);
+    }
 }

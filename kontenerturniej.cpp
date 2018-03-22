@@ -30,6 +30,20 @@ void KontenerTurniej::losujNastepnaRunde(int indexTurnieju)
     this->turnieje[indexTurnieju].losujNastepnaRunde();
 }
 
+void KontenerTurniej::ustalNajwiekszyBrejkTurnieju(int indexTurnieju)
+{
+    int max = 0;
+    Turniej t = this->getTurniej(indexTurnieju);
+    for(int i = 0; i < t.getMecze().size();i++){
+        for(int j = 0; j < t.getMecz(i).getPartie().size();j++){
+            if(t.getMecz(i).getPartia(j).getAktualnyBrejk() > max){
+                max = t.getMecz(i).getPartia(j).getAktualnyBrejk();
+            }
+        }
+    }
+    this->turnieje[indexTurnieju].setNajwyzszyBrejkTurnieju(max);
+}
+
 KontenerTurniej::KontenerTurniej()
 {
     this->turnieje = vector<Turniej>();

@@ -30,6 +30,7 @@ public:
     void aktualizujWynikMeczu(int indexTurnieju, int indexMeczu,Partia partia);
     void dodajPartie(int indexTurnieju, int indexMeczu);
     void losujNastepnaRunde(int indexTurnieju);
+    void ustalNajwiekszyBrejkTurnieju(int indexTurnieju);
 };
 
 #endif // KONTENERTURNIEJ_H
