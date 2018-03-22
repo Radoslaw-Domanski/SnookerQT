@@ -261,9 +261,6 @@ void Turniej::aktualizujPartie(int indexMeczu, int indexPartii, Partia partia)
        mecz.getWynik2() < ( mecz.getLiczbaPartii()/2  + 1 )   ){
         this->mecze[indexMeczu].dodajPartie(Partia(0,0,0,147,15,true,false,ilosc));
     }
-    else{
-        this->mecze[indexMeczu].setZakonczony(true);
-    }
 }
 
 void Turniej::aktualizujWynikMeczu(int indexMeczu, Partia partia)

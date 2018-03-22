@@ -17,7 +17,6 @@ SOURCES += main.cpp\
     administrator.cpp \
     osoba.cpp \
     zalogowany.cpp \
-    dodanieadminapowodzenie.cpp \
     partia.cpp \
     zawodnik.cpp \
     mecz.cpp \
@@ -30,7 +29,6 @@ HEADERS  += logowanie.h \
     administrator.h \
     osoba.h \
     zalogowany.h \
-    dodanieadminapowodzenie.h \
     partia.h \
     zawodnik.h \
     mecz.h \
@@ -40,8 +38,7 @@ HEADERS  += logowanie.h \
     kontenerturniej.h
 
 FORMS    += logowanie.ui \
-    zalogowany.ui \
-    dodanieadminapowodzenie.ui
+    zalogowany.ui
 
 DISTFILES += \
     administratorzy.xml \

@@ -1,6 +1,5 @@
 #include "zalogowany.h"
 #include "ui_zalogowany.h"
-#include "dodanieadminapowodzenie.h"
 
 Zalogowany::Zalogowany(QWidget *parent) :
     QMainWindow(parent),
@@ -357,8 +356,6 @@ void Zalogowany::on_edycjaAdministratora_clicked()
     Administrator adm = Administrator(imie,nazwisko,login,haslo);
     if(ui->edycjaAdministratora->text() == "Dodaj"){
         if(this->kontenerAdministratorzy.dodajAdministratora(adm)){
-            DodanieAdminaPowodzenie *powodzenie = new DodanieAdminaPowodzenie(this);
-            powodzenie->show();
             this->ui->administratorzyListWidget->addItem(QString::fromStdString(imie + " " + nazwisko));
             ui->errorLabel->setText("");
         }
@@ -368,8 +365,6 @@ void Zalogowany::on_edycjaAdministratora_clicked()
     }
     else{
         if(this->kontenerAdministratorzy.edytujAdministratora(this->getAdministratorIndex(),adm)){
-            DodanieAdminaPowodzenie *powodzenie = new DodanieAdminaPowodzenie(this);
-            powodzenie->show();
             this->ui->administratorzyListWidget->item(this->getAdministratorIndex())->setText(QString::fromStdString(adm.getImie() + " " + adm.getNazwisko()));
             ui->errorLabel->setText("");
         }
@@ -459,8 +454,6 @@ void Zalogowany::on_edytujZawodnikaButton_clicked()
     if(ui->edytujZawodnikaButton->text() == "Edytuj"){
         Zawodnik zaw = Zawodnik(imie,nazwisko,narodowosc,data,0,0,0,0.0,0);
         if(this->kontenerZawodnicy.setZawodnik(this->zawodnikIndex,zaw)){
-            DodanieAdminaPowodzenie *powodzenie = new DodanieAdminaPowodzenie(this);
-            powodzenie->show();
             ui->errorZawodnikLabel->setText("");
             ui->zawodnicyListWidget->item(this->getZawodnikIndex())->setText(QString::fromStdString(imie + " " + nazwisko));
         }
@@ -471,8 +464,6 @@ void Zalogowany::on_edytujZawodnikaButton_clicked()
     else if(ui->edytujZawodnikaButton->text() == "Dodaj"){
         Zawodnik zaw = Zawodnik(imie,nazwisko,narodowosc,data,0,0,0,0.0,id);
         if(this->kontenerZawodnicy.dodajZawodnika(zaw)){
-            DodanieAdminaPowodzenie *powodzenie = new DodanieAdminaPowodzenie(this);
-            powodzenie->show();
             ui->zawodnicyListWidget->addItem(QString::fromStdString(imie + " " + nazwisko));
             ui->errorZawodnikLabel->setText("");
         }
@@ -689,12 +680,6 @@ void Zalogowany::on_dodajTurniejButton_clicked()
         ui->dodajZawodnikaListWidget->addItem(QString::fromStdString(zawodnicy[i].getImie()+ " " + zawodnicy[i].getNazwisko()));
     }
 }
-
-
-void ustalZawodnikowWLiscie(){
-
-}
-
 void Zalogowany::on_edytujTurniejButton_clicked()
 {
     if(ui->edytujTurniejButton->text() == "Dodaj"){
