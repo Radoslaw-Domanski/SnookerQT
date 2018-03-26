@@ -8,7 +8,7 @@
  * @brief The Administrator class
  * klasa przechowuje dane administratora
  */
-class Administrator : public Osoba
+class Administrator : public Osoba<std::string>
 {
 private:
     /**

@@ -9,6 +9,7 @@ using namespace std;
  * klasa przedstawia podstawowe dane o osobie
  * po niej dziedzicza klasy administrator i zawodnik
  */
+template <typename T>
 class Osoba
 {
 private:
@@ -16,35 +17,35 @@ private:
      * @brief imie
      * imie osoby
      */
-    string imie;
+    T imie;
     /**
      * @brief nazwisko
      * nazwisko osoby
      */
-    string nazwisko;
+    T nazwisko;
 public:
     /**
      * @brief getImie
      * @return zwracane jest imie osoby
      */
-    string getImie();
+    T getImie();
     /**
      * @brief getNazwisko
      * @return zwracane jest nazwisko osoby
      */
-    string getNazwisko();
+    T getNazwisko();
     /**
      * @brief setImie
      * @param imie
      * metoda nadpisuje imie osoby
      */
-    void setImie(string imie);
+    void setImie(T imie);
     /**
      * @brief setNazwisko
      * @param nazwisko
      * metoda nadpisuje nazwisko osoby
      */
-    void setNazwisko(string nazwisko);
+    void setNazwisko(T nazwisko);
     /**
      * @brief Osoba
      * domyslny konstruktor
@@ -61,6 +62,6 @@ public:
      * @param nazwisko
      * konstruktor przyjmujacy imie i nazwisko osoby
      */
-    Osoba(string imie, string nazwisko);
+    Osoba(T imie, T nazwisko);
 };
 #endif

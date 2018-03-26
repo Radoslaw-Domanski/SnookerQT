@@ -1,6 +1,7 @@
 #ifndef ZAWODNIK_H
 #define ZAWODNIK_H
 #include "osoba.h"
+#include "osoba.cpp"
 #include "ctime"
 #include <string.h>
 
@@ -8,7 +9,7 @@
  * @brief The Zawodnik class
  * klasa przechowujaca i zarzadzajaca informacjami o zawodnikach
  */
-class Zawodnik : public Osoba
+class Zawodnik : public Osoba<std::string>
 {
 private:
     /**

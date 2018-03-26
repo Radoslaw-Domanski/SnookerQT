@@ -1,36 +1,36 @@
 #include <string>
 #include "Osoba.h"
 
-
-Osoba::Osoba()
+template <typename T>
+Osoba<T>::Osoba()
 {
     this->setImie("");
     this->setNazwisko("");
 }
-
-Osoba::Osoba(string imie, string nazwisko)
+template <typename T>
+Osoba<T>::Osoba(T imie, T nazwisko)
 {
     this->setImie(imie);
     this->setNazwisko(nazwisko);
 }
-
-Osoba::~Osoba()
+template <typename T>
+Osoba<T>::~Osoba()
 {
 
 }
-
-string Osoba::getImie() {
+template <typename T>
+T Osoba<T>::getImie() {
     return this->imie;
 }
-
-void Osoba::setImie(string imie) {
+template <typename T>
+void Osoba<T>::setImie(T imie) {
     this->imie = imie;
 }
-
-string Osoba::getNazwisko() {
+template <typename T>
+T Osoba<T>::getNazwisko() {
     return this->nazwisko;
 }
-
-void Osoba::setNazwisko(string nazwisko) {
+template <typename T>
+void Osoba<T>::setNazwisko(T nazwisko) {
     this->nazwisko = nazwisko;
 }
