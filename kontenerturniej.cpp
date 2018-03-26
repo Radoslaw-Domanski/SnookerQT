@@ -44,6 +44,13 @@ void KontenerTurniej::ustalNajwiekszyBrejkTurnieju(int indexTurnieju)
     this->turnieje[indexTurnieju].setNajwyzszyBrejkTurnieju(max);
 }
 
+void KontenerTurniej::edytujTurniej(int indexTurnieju, string nazwa, string miejsce, string sponsor)
+{
+    this->turnieje[indexTurnieju].setNazwa(nazwa);
+    this->turnieje[indexTurnieju].setMiejsce(miejsce);
+    this->turnieje[indexTurnieju].setSponsor(sponsor);
+}
+
 KontenerTurniej::KontenerTurniej()
 {
     this->turnieje = vector<Turniej>();

@@ -121,6 +121,16 @@ public:
      * @param indexTurnieju
      */
     void ustalNajwiekszyBrejkTurnieju(int indexTurnieju);
+
+    /**
+     * @brief edytujTurniej
+     * metoda edytuje dane turnieju o okreslonym indeksie
+     * @param indexTurnieju
+     * @param nazwa
+     * @param miejsce
+     * @param sponsor
+     */
+    void edytujTurniej(int indexTurnieju, string nazwa, string miejsce, string sponsor);
 };
 
 #endif // KONTENERTURNIEJ_H

@@ -2,6 +2,7 @@
 #define ZAWODNIK_H
 #include "osoba.h"
 #include "ctime"
+#include <string.h>
 
 /**
  * @brief The Zawodnik class

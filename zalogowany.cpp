@@ -697,6 +697,15 @@ void Zalogowany::on_edytujTurniejButton_clicked()
             dodajTurniejeDoListy();
         }
     }
+    else if(ui->edytujTurniejButton->text() == "Edytuj"){
+        string nazwa = ui->nazwaTurniejLineEdit->text().toStdString();
+        string sponsor = ui->sponsorTurniejLineEdit->text().toStdString();
+        string miejsce = ui->miejsceTurniejLineEdit->text().toStdString();
+        if(nazwa.length() > 2 && sponsor.length() > 2 && miejsce.length() > 2){
+            this->kontenerTurniej.edytujTurniej(this->turniejIndex,nazwa,miejsce,sponsor);
+            this->ui->turniejeListWidget->item(this->turniejIndex)->setText(QString::fromStdString(sponsor) + " " + QString::fromStdString(nazwa));
+        }
+    }
 }
 
 void Zalogowany::on_dodajZawodnikaListWidget_currentRowChanged(int currentRow)
