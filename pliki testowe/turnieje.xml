@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<turnieje>
+	<turniej id="1">
+		<nazwa>Masters</nazwa>
+		<sponsor>Dafabet</sponsor>
+		<miejsce>Londyn</miejsce>
+		<pulaNagrod>12345.00</pulaNagrod>
+		<najwyzszyBrejkTurnieju>79</najwyzszyBrejkTurnieju>
+		<liczbaZawodnikow>4</liczbaZawodnikow>
+		<zawodnicy>
+			<zawodnik>1</zawodnik>
+			<zawodnik>3</zawodnik>
+			<zawodnik>5</zawodnik>
+			<zawodnik>4</zawodnik>
+		</zawodnicy>
+	</turniej>
+	<turniej id="2">
+		<nazwa>Turniej2</nazwa>
+		<sponsor>Bogaty</sponsor>
+		<miejsce>Warszawa</miejsce>
+		<pulaNagrod>123456.00</pulaNagrod>
+		<najwyzszyBrejkTurnieju>0</najwyzszyBrejkTurnieju>
+		<liczbaZawodnikow>4</liczbaZawodnikow>
+		<zawodnicy>
+			<zawodnik>2</zawodnik>
+			<zawodnik>1</zawodnik>
+			<zawodnik>5</zawodnik>
+			<zawodnik>4</zawodnik>
+		</zawodnicy>
+	</turniej>
+	<turniej id="3">
+		<nazwa>testowy</nazwa>
+		<sponsor>sponsort</sponsor>
+		<miejsce>warszawa</miejsce>
+		<pulaNagrod>12345.00</pulaNagrod>
+		<najwyzszyBrejkTurnieju>0</najwyzszyBrejkTurnieju>
+		<liczbaZawodnikow>4</liczbaZawodnikow>
+		<zawodnicy>
+			<zawodnik>1</zawodnik>
+			<zawodnik>2</zawodnik>
+			<zawodnik>4</zawodnik>
+			<zawodnik>3</zawodnik>
+		</zawodnicy>
+	</turniej>
+</turnieje>
+

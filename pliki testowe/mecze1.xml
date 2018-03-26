@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mecze>
+	<mecz nr="1">
+		<zawodnik1>3</zawodnik1>
+		<zawodnik2>4</zawodnik2>
+		<liczbaPartii>5</liczbaPartii>
+		<wynik1>0</wynik1>
+		<wynik2>1</wynik2>
+		<dataMeczu>19-03-2018</dataMeczu>
+		<partie>
+			<partia nr="1">
+				<punktyZawodnika1>0</punktyZawodnika1>
+				<punktyZawodnika2>79</punktyZawodnika2>
+				<aktualnyBrejk>79</aktualnyBrejk>
+				<dostepnePunkty>59</dostepnePunkty>
+				<dostepneBileCzerwone>4</dostepneBileCzerwone>
+				<aktualnyGracz>0</aktualnyGracz>
+			</partia>
+			<partia nr="2">
+				<punktyZawodnika1>0</punktyZawodnika1>
+				<punktyZawodnika2>0</punktyZawodnika2>
+				<aktualnyBrejk>0</aktualnyBrejk>
+				<dostepnePunkty>147</dostepnePunkty>
+				<dostepneBileCzerwone>15</dostepneBileCzerwone>
+				<aktualnyGracz>1</aktualnyGracz>
+			</partia>
+		</partie>
+	</mecz>
+	<mecz nr="2">
+		<zawodnik1>1</zawodnik1>
+		<zawodnik2>5</zawodnik2>
+		<liczbaPartii>5</liczbaPartii>
+		<wynik1>1</wynik1>
+		<wynik2>0</wynik2>
+		<dataMeczu>19-03-2018</dataMeczu>
+		<partie>
+			<partia nr="1">
+				<punktyZawodnika1>24</punktyZawodnika1>
+				<punktyZawodnika2>0</punktyZawodnika2>
+				<aktualnyBrejk>24</aktualnyBrejk>
+				<dostepnePunkty>123</dostepnePunkty>
+				<dostepneBileCzerwone>12</dostepneBileCzerwone>
+				<aktualnyGracz>1</aktualnyGracz>
+			</partia>
+			<partia nr="2">
+				<punktyZawodnika1>0</punktyZawodnika1>
+				<punktyZawodnika2>0</punktyZawodnika2>
+				<aktualnyBrejk>0</aktualnyBrejk>
+				<dostepnePunkty>147</dostepnePunkty>
+				<dostepneBileCzerwone>15</dostepneBileCzerwone>
+				<aktualnyGracz>1</aktualnyGracz>
+			</partia>
+		</partie>
+	</mecz>
+</mecze>
+
