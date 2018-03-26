@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zawodnicy>
+	<zawodnik id="1">
+		<imie>Amadeusz</imie>
+		<nazwisko>Kalinowski</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Polska</narodowosc>
+		<dataUrodzenia>25-08-1994</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="2">
+		<imie>Wojtek</imie>
+		<nazwisko>Ostrowski</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Polska</narodowosc>
+		<dataUrodzenia>14-04-1987</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="3">
+		<imie>Wacław</imie>
+		<nazwisko>Sokołowski</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Polska</narodowosc>
+		<dataUrodzenia>26-10-1981</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="4">
+		<imie>Mark</imie>
+		<nazwisko>Selby</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Anglia</narodowosc>
+		<dataUrodzenia>19-06-1983</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="5">
+		<imie>Ronnie</imie>
+		<nazwisko>O&apos;Sullivan</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Anglia</narodowosc>
+		<dataUrodzenia>05-12-1975</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="6">
+		<imie>Judd</imie>
+		<nazwisko>Trump</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Anglia</narodowosc>
+		<dataUrodzenia>20-08-1989</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="7">
+		<imie>Junhui</imie>
+		<nazwisko>Ding</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Chiny</narodowosc>
+		<dataUrodzenia>01-04-1987</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="8">
+		<imie>John</imie>
+		<nazwisko>Higgins</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Szkocja</narodowosc>
+		<dataUrodzenia>15-05-1975</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="9">
+		<imie>Mark</imie>
+		<nazwisko>Williams</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Walia</narodowosc>
+		<dataUrodzenia>21-03-1975</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="10">
+		<imie>Shaun</imie>
+		<nazwisko>Murphy</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Anglia</narodowosc>
+		<dataUrodzenia>10-08-1982</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="11">
+		<imie>Barry</imie>
+		<nazwisko>Hawkins</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Anglia</narodowosc>
+		<dataUrodzenia>23-04-1979</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="12">
+		<imie>Mark</imie>
+		<nazwisko>Allen</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Irlandia Północna</narodowosc>
+		<dataUrodzenia>22-02-1986</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="13">
+		<imie>Neil</imie>
+		<nazwisko>Robertson</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Australia</narodowosc>
+		<dataUrodzenia>11-02-1982</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="14">
+		<imie>Ali</imie>
+		<nazwisko>Carter</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Anglia</narodowosc>
+		<dataUrodzenia>25-07-1979</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="15">
+		<imie>Luca</imie>
+		<nazwisko>Brecel</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Belgia</narodowosc>
+		<dataUrodzenia>08-03-1995</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="16">
+		<imie>Stephen</imie>
+		<nazwisko>Maguire</nazwisko>
+		<brejkiMaksymalne>1</brejkiMaksymalne>
+		<brejkiStupunktowe>31</brejkiStupunktowe>
+		<najwyzszyBrejk>147</najwyzszyBrejk>
+		<zarobki>24300.00</zarobki>
+		<narodowosc>Szkocja</narodowosc>
+		<dataUrodzenia>13-03-1981</dataUrodzenia>
+	</zawodnik>
+	<zawodnik id="17">
+		<imie>Radosław</imie>
+		<nazwisko>Domański</nazwisko>
+		<brejkiMaksymalne>0</brejkiMaksymalne>
+		<brejkiStupunktowe>0</brejkiStupunktowe>
+		<najwyzszyBrejk>0</najwyzszyBrejk>
+		<zarobki>0.00</zarobki>
+		<narodowosc>Polska</narodowosc>
+		<dataUrodzenia>02-09-1994</dataUrodzenia>
+	</zawodnik>
+</zawodnicy>
+

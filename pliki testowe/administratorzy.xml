@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<administratorzy>
+	<administrator>
+		<login>datadata</login>
+		<haslo>wiesio</haslo>
+		<imie>Pan</imie>
+		<nazwisko>Wiesio</nazwisko>
+	</administrator>
+	<administrator>
+		<login>admin</login>
+		<haslo>admin</haslo>
+		<imie>Pan</imie>
+		<nazwisko>Administrator</nazwisko>
+	</administrator>
+	<administrator>
+		<login>Wiesio</login>
+		<haslo>wielonoga</haslo>
+		<imie>Zbigniew</imie>
+		<nazwisko>Wielonoga</nazwisko>
+	</administrator>
+</administratorzy>
+
